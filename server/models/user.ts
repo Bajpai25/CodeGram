@@ -1,10 +1,17 @@
-import mongoose, { Document } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
+
+// Define Submission interface (if it exists)
+interface Submission {
+    problemId: string;
+    status: string;
+    submittedAt: Date;
+}
 
 interface DUser extends Document {
     username: string;
     email: string;
     password: string;
-    submissions: Submission[] | undefined;
+    submissions?: Submission[];
     problems_starred: string[];
     problems_solved: string[];
     problems_attempted: string[];
@@ -15,28 +22,42 @@ interface DUser extends Document {
     reputation_count: number;
 }
 
-const userSchema = new mongoose.Schema<DUser>({
+// Define Schema
+const userSchema = new Schema<DUser>({
     username: {
         type: String,
         required: true,
+        unique: true, // Ensure unique usernames
+        trim: true,   // Trim whitespace
     },
     email: {
         type: String,
         required: true,
+        unique: true, // Ensure unique emails
+        lowercase: true, // Normalize case
     },
     password: {
         type: String,
         required: true,
     },
-    submissions: Array,
-    problems_starred: Array,
-    problems_solved: Array,
-    problems_attempted: Array,
+    submissions: [
+        {
+            problemId: { type: String, required: true },
+            status: { type: String, required: true },
+            submittedAt: { type: Date, default: Date.now },
+        },
+    ],
+    problems_starred: [{ type: String }],
+    problems_solved: [{ type: String }],
+    problems_attempted: [{ type: String }],
     problems_solved_count: {
         type: Number,
         default: 0,
     },
-    rank: Number,
+    rank: {
+        type: Number,
+        default: 0,
+    },
     views: {
         type: Number,
         default: 0,
@@ -49,6 +70,14 @@ const userSchema = new mongoose.Schema<DUser>({
         type: Number,
         default: 0,
     },
+});
+
+// Hash password before saving (if using authentication)
+userSchema.pre("save", async function (next) {
+    if (!this.isModified("password")) return next();
+    const bcrypt = await import("bcryptjs");
+    this.password = await bcrypt.hash(this.password, 10);
+    next();
 });
 
 const UserModel = mongoose.model<DUser>("User", userSchema);

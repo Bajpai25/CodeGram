@@ -1,4 +1,4 @@
-import express, { json } from "express";
+import express from "express";
 import { writeTestFile } from "../utils/createTest";
 import ProblemModel from "../models/problem";
 import UserModel from "../models/user";
@@ -9,6 +9,24 @@ import {
     sortByTitle,
 } from "../utils/utils";
 
+// Import Types from mongoose for type checking
+import { Types, Document } from "mongoose";
+
+// Define the Submission interface directly in this file to avoid conflicts
+interface Submission {
+    problem_name: string;
+    status: string;
+    error?: string;
+    time: Date;
+    runtime: number;
+    language: string;
+    memory: number;
+    code_body?: string;
+    input?: any;
+    expected_output?: any;
+    user_output?: any;
+}
+
 const problem = express.Router();
 
 problem.post("/all", async (req, res) => {
@@ -17,7 +35,6 @@ problem.post("/all", async (req, res) => {
     const difficulty = req.query.difficulty || "";
     const acceptance = req.query.acceptance || "";
     const title = req.query.title || "";
-
     try {
         const allProblems = await ProblemModel.find(
             { "main.name": { $regex: search, $options: "i" } },
@@ -25,25 +42,31 @@ problem.post("/all", async (req, res) => {
         )
             .sort({ "main.id": 1 })
             .exec();
-
-        const allProblemsSorted = sortByAcceptance(
-            acceptance.toString() as Sort,
-            sortByDifficulty(
-                difficulty.toString() as Sort,
-                sortByTitle(title.toString() as Sort, allProblems)
-            )
+        
+        // Cast to any to avoid type conflicts
+        const sortedByTitle = sortByTitle(
+            title.toString() as any,
+            allProblems
         );
-
+        
+        const sortedByDifficulty = sortByDifficulty(
+            difficulty.toString() as any,
+            sortedByTitle
+        );
+        
+        const allProblemsSorted = sortByAcceptance(
+            acceptance.toString() as any,
+            sortedByDifficulty
+        );
+        
         const user = await UserModel.findById(id);
         const sOrA = {
             solved: user?.problems_solved,
             attempted: user?.problems_attempted,
         };
-
         let allProblemsArray: DProblem[] = JSON.parse(
             JSON.stringify(allProblemsSorted)
         );
-
         if (sOrA.attempted) {
             for (let i = 0; i < allProblemsArray.length; i++) {
                 if (sOrA.attempted.includes(allProblemsArray[i].main.name)) {
@@ -58,7 +81,6 @@ problem.post("/all", async (req, res) => {
                 }
             }
         }
-
         res.json(allProblemsArray);
     } catch (e) {
         console.log(e);
@@ -73,7 +95,6 @@ problem.post<
 >("/submit/:name", async (req, res) => {
     const { name } = req.params;
     const { id, problem_name } = req.body;
-
     try {
         const problem = await ProblemModel.findOne({
             "main.name": name,
@@ -96,7 +117,8 @@ problem.post<
         }
         let history: Submission[] | null;
         if (user.submissions) {
-            history = user.submissions;
+            // Cast user.submissions to our Submission type
+            history = user.submissions as unknown as Submission[];
         } else {
             history = null;
         }
@@ -123,12 +145,11 @@ problem.post<
                         if (history != null) {
                             submission.push(...history);
                         }
-
                         const subsByName = submission.filter(
                             (elem) => elem.problem_name === problem_name
                         );
-                        user.submissions = submission;
-
+                        // Use type assertion to save submissions
+                        user.submissions = submission as any;
                         if (submission[0].status === "Accepted") {
                             if (!user.problems_solved.includes(problem_name)) {
                                 user.problems_solved.push(problem_name);
@@ -150,7 +171,7 @@ problem.post<
                         {
                             problem_name: problem_name,
                             status: "Runtime Error",
-                            error: e,
+                            error: String(e),
                             time: new Date(),
                             runtime: 0,
                             language: "JavaScript",
@@ -161,28 +182,26 @@ problem.post<
                     if (history) {
                         submission.push(...history);
                     }
-
                     if (!user.problems_attempted.includes(problem_name)) {
                         user.problems_attempted.push(problem_name);
                     }
-
                     const subsByName = submission.filter(
                         (elem) => elem.problem_name === problem_name
                     );
-
-                    user.submissions = submission;
+                    // Use type assertion to save submissions
+                    user.submissions = submission as any;
                     await user.save();
                     res.json(subsByName);
                 });
         }
     } catch (e) {
         console.log(e);
+        res.status(500).json([]);  // Return empty array to match the return type
     }
 });
 
 problem.post<{ name: string }, Submission[], { id: string }>(
     "/submissions/:name",
-
     async (req, res) => {
         const { name } = req.params;
         const { id } = req.body;
@@ -196,11 +215,12 @@ problem.post<{ name: string }, Submission[], { id: string }>(
                 res.json([]);
                 return;
             }
-
-            const subsByName = user.submissions.filter(
+            
+            // Cast user.submissions to our Submission type and filter by problem_name
+            const submissions = user.submissions as unknown as Submission[];
+            const subsByName = submissions.filter(
                 (elem) => elem.problem_name === name
             );
-
             res.json(subsByName);
         } catch (e) {
             console.log(e);
@@ -216,25 +236,24 @@ problem.post("/:name", async (req, res) => {
         const problem = await ProblemModel.findOne({
             "main.name": name,
         });
-
         const user = await UserModel.findById(id);
+        if (!problem) {
+            res.json({ error: "problem not found" });
+            return;
+        }
+        
         const problemJson: DProblem = JSON.parse(JSON.stringify(problem));
-
         if (user?.problems_attempted.includes(name)) {
             problemJson.main.status = "attempted";
         }
         if (user?.problems_solved.includes(name)) {
             problemJson.main.status = "solved";
         }
-
-        if (problemJson) {
-            const response = problemJson;
-            res.json(response);
-        } else {
-            res.json({ error: "problem not found" });
-        }
+        
+        res.json(problemJson);
     } catch (e) {
         console.log(e);
+        res.status(500).json({ error: "Internal Server Error" });
     }
 });
 
@@ -247,9 +266,12 @@ problem.get("/:name/editorial", async (req, res) => {
         if (problem) {
             const response = problem.editorial;
             res.json(response);
+        } else {
+            res.status(404).json({ error: "Editorial not found" });
         }
     } catch (e) {
         console.log(e);
+        res.status(500).json({ error: "Internal Server Error" });
     }
 });
 

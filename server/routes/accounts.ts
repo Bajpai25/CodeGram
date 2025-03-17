@@ -68,7 +68,10 @@ accounts.post<{}, SignupResponse, SignupRequest>("/signup", async (req: Request,
             return res.status(409).json({ success: false, message: "Email already exists." });
         }
 
+        // Add this to your signup route
+        console.log(`About to hash password: "${password}"`);
         const hashedPassword = await bcrypt.hash(password, 10);
+        console.log(`Generated hash: ${hashedPassword.substring(0, 10)}...`);
         const newUser = new UserModel({ username, email, password: hashedPassword });
         await newUser.save();
 
@@ -113,29 +116,57 @@ accounts.post<{}, LoginResponse, LoginRequest>("/login", async (req: Request, re
     }
 
     try {
+        console.log(`Login attempt for: ${username_or_email}`);
+        
         const user = await UserModel.findOne({ $or: [{ username: username_or_email }, { email: username_or_email }] });
 
         if (!user) {
+            console.log(`User not found: ${username_or_email}`);
             return res.status(400).json({ success: false, message: "User not found." });
         }
 
+        console.log(`Found user: ${user.username}, email: ${user.email}`);
+        console.log(`Stored password hash starts with: ${user.password.substring(0, 10)}...`);
+        
+        // Create a test hash with the provided password
+        const testHash = await bcrypt.hash(password, 10);
+        console.log(`Test hash with provided password: ${testHash.substring(0, 10)}...`);
+        
+        // Perform the comparison
+        console.log(`Comparing provided password "${password}" with stored hash`);
         const isPasswordValid = await bcrypt.compare(password, user.password);
+        console.log(`Password comparison result: ${isPasswordValid}`);
+        
         if (!isPasswordValid) {
             console.log(`Failed login attempt for '${username_or_email}' at`, new Date());
             return res.status(401).json({ success: false, message: "Incorrect password." });
         }
 
-        const token = jwt.sign({ id: user._id, username: user.username }, process.env.ACCESS_TOKEN_SECRET!, { expiresIn: "1h" });
+        // Check if ACCESS_TOKEN_SECRET exists
+        if (!process.env.ACCESS_TOKEN_SECRET) {
+            console.error("ACCESS_TOKEN_SECRET is not defined in environment variables");
+            return res.status(500).json({ success: false, message: "Server configuration error" });
+        }
+
+        const token = jwt.sign(
+            { id: user._id, username: user.username }, 
+            process.env.ACCESS_TOKEN_SECRET, 
+            { expiresIn: "1h" }
+        );
 
         console.log(`User '${user.username}' logged in at`, new Date());
-        return res.json({ id: user._id.toString(), token, success: true, message: "Logged in successfully" });
+        return res.json({ 
+            id: user._id.toString(), 
+            token, 
+            success: true, 
+            message: "Logged in successfully" 
+        });
 
     } catch (error) {
-        console.error(error);
+        console.error("Login error:", error);
         return res.status(500).json({ success: false, message: "Error logging in." });
     }
 });
-
 // 📌 Delete Account Route
 accounts.post("/delete/:id", authenticateToken, async (req: Request, res: Response) => {
     try {

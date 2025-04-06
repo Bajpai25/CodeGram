@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import ProblemPage from "./pages/ProblemPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ProblemSet from "./pages/ProblemSet";
-import LandingPage from "./pages/LandingPage";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import ErrorPage from "./pages/ErrorPage";
 import ProfilePage from "./pages/ProfilePage";
 import SettingPage from "./pages/SettingPage";
+import Home from "./pages/Home"
 
 export const TOKEN_STORAGE_KEY = "authToken";
 export const ID_STORAGE_KEY = "id";
@@ -44,7 +44,7 @@ function App() {
                 <Routes>
                     <Route
                         path="/"
-                        element={<LandingPage token={token} id={id} />}
+                        element={<Home token={token} id={id} /> }
                     />
                     <Route
                         path="/problemset"

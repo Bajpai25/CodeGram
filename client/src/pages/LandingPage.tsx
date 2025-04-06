@@ -131,7 +131,7 @@ const LandingPage = ({
                             />
                         </h1>
                         <p className="mt-8 text-xl text-gray-300 max-w-2xl mx-auto text-center leading-relaxed">
-                            Reach the pinnacle of your coding potential with FireCode. Elevate your skills, conquer challenges, and excel in technical interviews.
+                            Reach the pinnacle of your coding potential with Codegra. Elevate your skills, conquer challenges, and excel in technical interviews.
                         </p>
                         <div className="mt-12 text-center">
                             <Link
@@ -156,7 +156,7 @@ const LandingPage = ({
             <section className="relative z-20 py-20 bg-black/50 backdrop-blur-lg">
                 <div className="max-w-7xl mx-auto px-4">
                     <h2 className="text-4xl font-bold text-center mb-16 bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-red-600">
-                        Why Choose FireCode?
+                        Why Choose Codegram?
                     </h2>
                     <div className="grid md:grid-cols-3 gap-8">
                         <div className="p-6 rounded-xl bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 hover:border-orange-500/30 transition-all duration-300">
@@ -219,7 +219,7 @@ const LandingPage = ({
                         Ready to Begin Your Coding Journey?
                     </h2>
                     <p className="text-gray-400 mb-8 text-lg">
-                        Join thousands of developers who have already leveled up their coding skills with FireCode.
+                        Join thousands of developers who have already leveled up their coding skills with Codegram.
                     </p>
                     <Link
                         to="/signup"

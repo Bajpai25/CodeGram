@@ -69,8 +69,7 @@ accounts.post<{}, SignupResponse, SignupRequest>("/signup", async (req: Request,
             return res.status(409).json({ success: false, message: "Email already exists." });
         }
 
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new UserModel({ username, email, password: hashedPassword });
+        const newUser = new UserModel({ username, email, password });
         await newUser.save();
 
         if (!process.env.ACCESS_TOKEN_SECRET) {
@@ -105,6 +104,7 @@ accounts.post<{}, SignupResponse, SignupRequest>("/signup", async (req: Request,
 // 📌 Login Route
 accounts.post<{}, LoginResponse, LoginRequest>("/login", async (req: Request, res: Response) => {
     const { username_or_email, password } = req.body;
+    console.log("Login attempt for:", username_or_email);
 
     if (!username_or_email || !password) {
         return res.status(400).json({ success: false, message: "Missing required fields." });
@@ -117,7 +117,11 @@ accounts.post<{}, LoginResponse, LoginRequest>("/login", async (req: Request, re
             return res.status(400).json({ success: false, message: "User not found." });
         }
 
+        console.log("Found user:", user.username);
+        console.log("Stored password hash:", user.password);
+        
         const isPasswordValid = await bcrypt.compare(password, user.password);
+        console.log("Password valid?", isPasswordValid);
         
         if (!isPasswordValid) {
             return res.status(401).json({ success: false, message: "Incorrect password." });

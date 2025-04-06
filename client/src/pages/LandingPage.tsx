@@ -38,7 +38,8 @@ const LandingPage = ({
             });
     }, []);
     return (
-        <div className="text-[14px] overflow-hidden h-screen">
+        <div className="text-[14px] overflow-x-hidden min-h-screen bg-gradient-to-b from-black to-gray-900">
+            {/* Header Section */}
             {verifiedCertain && verified ? (
                 <MainHeading
                     data={{
@@ -59,96 +60,178 @@ const LandingPage = ({
                     }}
                 />
             )}
-            <div className="w-[100vw] overflow-hidden h-[calc(100vh-60px)] absolute">
-                <div className="circle-1-animation absolute top-[6%] left-[55%] -translate-x-1/2 w-[500px] h-[500px] rounded-full filter blur-[99px] bg-gradient-to-br from-transparent to-red-800 opacity-60 z-10"></div>
-                <div className="absolute circle-2-animation top-[8%] left-[45%] -translate-x-1/2 w-[500px] h-[500px] rounded-full filter blur-[99px] bg-gradient-to-br from-transparent to-orange-500 opacity-60 z-10"></div>
-                <div className="absolute circle-3-animation top-[10%] left-[45%] -translate-x-1/2 w-[400px] h-[300px] rounded-full filter blur-[99px] bg-gradient-to-br from-transparent to-yellow-600 opacity-60 z-10"></div>
-                <div className="absolute circle-4-animation top-[10%] left-[50%] -translate-x-1/2 w-[200px] h-[200px] rounded-full filter blur-[99px] bg-gradient-to-br from-transparent to-red-600 opacity-60 z-10"></div>
-                <div className="absolute circle-5-animation top-[10%] left-[45%] -translate-x-1/2 w-[400px] h-[400px] rounded-full filter blur-[99px] bg-gradient-to-br from-transparent to-orange-800 opacity-60 z-10"></div>
-                <div className="absolute top-[20%] left-[47%] -translate-x-1/2 w-[600px] h-[500px] rounded-full filter blur-[99px] bg-gradient-to-br from-transparent to-orange-600 opacity-60 z-10"></div>
-                <div className="absolute circle-7-animation top-[10%] left-[50%] -translate-x-1/2 w-[400px] h-[400px] rounded-full filter blur-[99px] bg-gradient-to-br from-transparent to-orange-800 opacity-60 z-10"></div>
-            </div>
-            {verifiedCertain && verified ? (
-                <>
-                    <h1 className="absolute text-[38px] md:text-[48px] mx-auto text-center font-bold mt-[100px] z-50 inset-0 top-[100px]">
-                        <TypeAnimation
-                            sequence={[
-                                `Welcome back ${username}!`,
-                                2000,
-                                `Ready for more challenges, ${username}?`,
-                                2000,
-                                "Let's dive in!",
-                            ]}
-                            wrapper="span"
-                            cursor={true}
-                            style={{
-                                fontSize: "1em",
-                                display: "inline-block",
-                            }}
-                        />
-                    </h1>
-                    <p className="absolute md:w-1/2 w-3/4 text-center mx-auto mt-[50px] z-50 inset-0 md:top-[300px] top-[400px]">
-                        Ready to conquer complex challenges? Explore our Problem
-                        List now!
-                    </p>
-                    <div className="absolute md:top-[450px] top-[550px] left-1/2 -translate-x-1/2 z-50">
-                        <Link
-                            to="/problemset"
-                            className="relative ml-[8px] font-bold inline-block bg-gradient-to-r from-orange-500 to-red-600 rounded-md text-black text-[18px] hover:bg-red-800"
-                        >
-                            <div className="w-full h-full bg-black text-white py-[6px] px-[16px] rounded-[6px] border border-black hover:bg-[#00000000] hover:border-[#00000000] hover:text-black transition active:bg-red-700">
-                                Problem List
-                            </div>
-                        </Link>
-                    </div>
-                </>
-            ) : verifiedCertain === true && verified === false ? (
-                <>
-                    <h1 className="absolute text-[38px] md:text-[48px] mx-auto text-center font-bold mt-[100px] z-50 inset-0 top-[100px]">
-                        <TypeAnimation
-                            sequence={[
-                                "Learn",
-                                2000,
-                                "Solve",
-                                2000,
-                                "Explore",
-                                2000,
-                                "Prepare",
-                                2000,
-                                "Start Now!",
-                                5000,
-                            ]}
-                            wrapper="span"
-                            cursor={true}
-                            repeat={Infinity}
-                            style={{
-                                fontSize: "1em",
-                                display: "inline-block",
-                            }}
-                        />
-                    </h1>
-                    <p className="absolute md:w-1/2 w-3/4 text-center mx-auto mt-[50px] z-50 inset-0 top-[300px]">
-                        Reach the pinnacle of your coding potential with
-                        FireCode. Elevate your skills, conquer challenges, and
-                        excel in technical interviews, propelling your
-                        programming journey to new heights.
-                    </p>
-                    <div className=" absolute top-[500px] left-1/2 -translate-x-1/2 z-50">
-                        <Link
-                            to="/signup"
-                            className=" relative ml-[8px] font-bold inline-block bg-gradient-to-r from-orange-500 to-red-600 rounded-md text-black text-[18px] hover:bg-red-800"
-                        >
-                            <div className="w-full h-full bg-black text-white py-[6px] px-[16px] rounded-[6px] border border-black hover:bg-[#00000000] hover:border-[#00000000] hover:text-black transition active:bg-red-700">
-                                Get Started
-                            </div>
-                        </Link>
-                    </div>
-                </>
-            ) : (
-                <div className="absolute top-1/2 -translate-x-1/2 left-1/2 -translate-y-1/2 z-[120]">
-                    <Loading />
+
+            {/* Hero Section with Animated Background */}
+            <div className="relative w-full overflow-hidden min-h-screen">
+                {/* Enhanced animated background */}
+                <div className="absolute inset-0 overflow-hidden">
+                    <div className="circle-1-animation absolute top-[6%] left-[55%] -translate-x-1/2 w-[600px] h-[600px] rounded-full filter blur-[120px] bg-gradient-to-br from-red-500/30 to-red-800/30 opacity-70 z-10 animate-pulse"></div>
+                    <div className="circle-2-animation absolute top-[8%] left-[45%] -translate-x-1/2 w-[600px] h-[600px] rounded-full filter blur-[120px] bg-gradient-to-br from-orange-400/30 to-orange-600/30 opacity-70 z-10 animate-pulse"></div>
+                    <div className="circle-3-animation absolute top-[10%] left-[45%] -translate-x-1/2 w-[500px] h-[500px] rounded-full filter blur-[120px] bg-gradient-to-br from-yellow-400/30 to-yellow-600/30 opacity-70 z-10 animate-pulse"></div>
                 </div>
-            )}
+
+                {/* Main Content */}
+                {verifiedCertain && verified ? (
+                    <div className="relative z-20 pt-[100px] px-4">
+                        <h1 className="text-5xl md:text-6xl text-center font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-red-600">
+                            <TypeAnimation
+                                sequence={[
+                                    `Welcome back ${username}!`,
+                                    2000,
+                                    `Ready for more challenges, ${username}?`,
+                                    2000,
+                                    "Let's dive in!",
+                                ]}
+                                wrapper="span"
+                                cursor={true}
+                                style={{
+                                    fontSize: "1em",
+                                    display: "inline-block",
+                                }}
+                            />
+                        </h1>
+                        <p className="mt-8 text-xl text-gray-300 max-w-2xl mx-auto text-center leading-relaxed">
+                            Ready to conquer complex challenges? Explore our Problem List now!
+                        </p>
+                        <div className="mt-12 text-center">
+                            <Link
+                                to="/problemset"
+                                className="inline-flex items-center px-8 py-3 text-lg font-semibold text-white bg-gradient-to-r from-orange-500 to-red-600 rounded-lg shadow-lg hover:shadow-orange-500/25 transition-all duration-300 transform hover:-translate-y-1"
+                            >
+                                Problem List
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                                </svg>
+                            </Link>
+                        </div>
+                    </div>
+                ) : verifiedCertain === true && verified === false ? (
+                    <div className="relative z-20 pt-[100px] px-4">
+                        <h1 className="text-5xl md:text-6xl text-center font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-red-600">
+                            <TypeAnimation
+                                sequence={[
+                                    "Learn",
+                                    2000,
+                                    "Solve",
+                                    2000,
+                                    "Explore",
+                                    2000,
+                                    "Prepare",
+                                    2000,
+                                    "Start Now!",
+                                    5000,
+                                ]}
+                                wrapper="span"
+                                cursor={true}
+                                repeat={Infinity}
+                                style={{
+                                    fontSize: "1em",
+                                    display: "inline-block",
+                                }}
+                            />
+                        </h1>
+                        <p className="mt-8 text-xl text-gray-300 max-w-2xl mx-auto text-center leading-relaxed">
+                            Reach the pinnacle of your coding potential with FireCode. Elevate your skills, conquer challenges, and excel in technical interviews.
+                        </p>
+                        <div className="mt-12 text-center">
+                            <Link
+                                to="/signup"
+                                className="inline-flex items-center px-8 py-3 text-lg font-semibold text-white bg-gradient-to-r from-orange-500 to-red-600 rounded-lg shadow-lg hover:shadow-orange-500/25 transition-all duration-300 transform hover:-translate-y-1"
+                            >
+                                Get Started
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                                </svg>
+                            </Link>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[120]">
+                        <Loading />
+                    </div>
+                )}
+            </div>
+
+            {/* Features Section */}
+            <section className="relative z-20 py-20 bg-black/50 backdrop-blur-lg">
+                <div className="max-w-7xl mx-auto px-4">
+                    <h2 className="text-4xl font-bold text-center mb-16 bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-red-600">
+                        Why Choose FireCode?
+                    </h2>
+                    <div className="grid md:grid-cols-3 gap-8">
+                        <div className="p-6 rounded-xl bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 hover:border-orange-500/30 transition-all duration-300">
+                            <div className="h-12 w-12 rounded-lg bg-orange-500/10 flex items-center justify-center mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                                </svg>
+                            </div>
+                            <h3 className="text-xl font-semibold mb-2 text-white">Smart Learning Path</h3>
+                            <p className="text-gray-400">Personalized learning experience that adapts to your skill level and learning pace.</p>
+                        </div>
+
+                        <div className="p-6 rounded-xl bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 hover:border-orange-500/30 transition-all duration-300">
+                            <div className="h-12 w-12 rounded-lg bg-orange-500/10 flex items-center justify-center mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                                </svg>
+                            </div>
+                            <h3 className="text-xl font-semibold mb-2 text-white">Real-world Problems</h3>
+                            <p className="text-gray-400">Practice with challenges inspired by actual technical interviews and industry scenarios.</p>
+                        </div>
+
+                        <div className="p-6 rounded-xl bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 hover:border-orange-500/30 transition-all duration-300">
+                            <div className="h-12 w-12 rounded-lg bg-orange-500/10 flex items-center justify-center mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                            </div>
+                            <h3 className="text-xl font-semibold mb-2 text-white">Community Driven</h3>
+                            <p className="text-gray-400">Learn and grow with a community of developers sharing solutions and insights.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Statistics Section */}
+            <section className="relative z-20 py-20 bg-gradient-to-b from-black/50 to-gray-900/50 backdrop-blur-lg">
+                <div className="max-w-7xl mx-auto px-4">
+                    <div className="grid md:grid-cols-3 gap-8 text-center">
+                        <div className="p-6">
+                            <div className="text-4xl font-bold text-orange-500 mb-2">500+</div>
+                            <div className="text-gray-400">Coding Challenges</div>
+                        </div>
+                        <div className="p-6">
+                            <div className="text-4xl font-bold text-orange-500 mb-2">50K+</div>
+                            <div className="text-gray-400">Active Users</div>
+                        </div>
+                        <div className="p-6">
+                            <div className="text-4xl font-bold text-orange-500 mb-2">100%</div>
+                            <div className="text-gray-400">Success Rate</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Call to Action Section */}
+            <section className="relative z-20 py-20 bg-black/50 backdrop-blur-lg">
+                <div className="max-w-4xl mx-auto text-center px-4">
+                    <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-red-600">
+                        Ready to Begin Your Coding Journey?
+                    </h2>
+                    <p className="text-gray-400 mb-8 text-lg">
+                        Join thousands of developers who have already leveled up their coding skills with FireCode.
+                    </p>
+                    <Link
+                        to="/signup"
+                        className="inline-flex items-center px-8 py-3 text-lg font-semibold text-white bg-gradient-to-r from-orange-500 to-red-600 rounded-lg shadow-lg hover:shadow-orange-500/25 transition-all duration-300 transform hover:-translate-y-1"
+                    >
+                        Start Coding Now
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                    </Link>
+                </div>
+            </section>
         </div>
     );
 };

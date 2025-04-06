@@ -7,6 +7,7 @@ import UserModel from "../models/user";
 import { authenticateToken } from "../middlewares/token";
 import { existsEmail, existsUsername } from "../utils/utils";
 import { z } from "zod"; // Using zod for validation
+import mongoose from "mongoose";
 
 dotenv.config(); // Load environment variables
 
@@ -42,7 +43,7 @@ interface LoginResponse {
 const signupSchema = z.object({
     username: z.string().min(3).max(15).regex(/^[a-zA-Z0-9_-]+$/, "Invalid username"),
     email: z.string().email("Invalid email format"),
-    password: z.string().min(8, "Password must be at least 8 characters").regex(/^(?=.[A-Za-z])(?=.\d).+$/, "Password must contain letters and numbers"),
+    password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
 // 📌 Signup Route
@@ -161,6 +162,11 @@ accounts.post("/delete/:id", authenticateToken, async (req: Request, res: Respon
 // 📌 Get User Info by ID (✨ NEW ROUTE)
 accounts.get("/id/:id", async (req: Request, res: Response) => {
     const { id } = req.params;
+
+    // Validate if the ID is a valid MongoDB ObjectId
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ success: false, message: "Invalid user ID format" });
+    }
 
     try {
         const user = await UserModel.findById(id);

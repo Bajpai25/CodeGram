@@ -1,8 +1,67 @@
 import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import MainHeading from "../components/MainHeading";
 import { API_URL } from "../App";
+import MainHeading from "../components/MainHeading";
+
+interface UserData {
+    id: string;
+    username: string;
+    email: string;
+    problems_solved: string[];
+    problems_attempted: string[];
+    submissions: any[];
+}
+
+const ActivityChart = ({ submissions }: { submissions: any[] }) => {
+    // Generate last 6 months of dates
+    const getLastSixMonths = () => {
+        const months = [];
+        const today = new Date();
+        for (let i = 5; i >= 0; i--) {
+            const month = new Date(today.getFullYear(), today.getMonth() - i, 1);
+            months.push(month.toLocaleString('default', { month: 'short' }));
+        }
+        return months;
+    };
+
+    const months = getLastSixMonths();
+    
+    // Generate random activity data (replace with real data later)
+    const generateActivityData = () => {
+        return Array.from({ length: 6 }, () => Math.floor(Math.random() * 20));
+    };
+
+    const activityData = generateActivityData();
+
+    return (
+        <div className="bg-[#282828] rounded-lg border border-[#3e3e3e] p-6">
+            <h2 className="text-xl font-bold text-white mb-6">Activity</h2>
+            <div className="relative h-64">
+                {/* Y-axis */}
+                <div className="absolute left-0 h-full flex flex-col justify-between text-[#8a8a8a] text-sm">
+                    <span>20</span>
+                    <span>15</span>
+                    <span>10</span>
+                    <span>5</span>
+                    <span>0</span>
+                </div>
+                
+                {/* Chart */}
+                <div className="ml-8 h-full flex items-end">
+                    {activityData.map((value, index) => (
+                        <div key={index} className="flex-1 flex flex-col items-center">
+                            <div 
+                                className="w-4/5 bg-[#2cbb5d] rounded-sm transition-all duration-500"
+                                style={{ height: `${(value / 20) * 100}%` }}
+                            ></div>
+                            <span className="text-[#8a8a8a] text-sm mt-2">{months[index]}</span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+};
 
 const ProfilePage = ({
     token,
@@ -11,217 +70,151 @@ const ProfilePage = ({
     token: string | null;
     id: string | null;
 }) => {
-    const [username, setUsername] = useState<string>("");
-    const [verified, setVerified] = useState<boolean>(false);
-    const [user, setUser] = useState<PublicUser>();
-    const [verifiedCertain, setVerifiedCertain] = useState<boolean>(false);
-    const { name } = useParams();
-
-    const [eAll, setEAll] = useState<number>();
-    const [mAll, setMAll] = useState<number>();
-    const [hAll, setHALL] = useState<number>();
-
-    const [eSolved, setESolved] = useState<number>();
-    const [mSolved, setMSolved] = useState<number>();
-    const [hSolved, setHSolved] = useState<number>();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string>("");
+    const [userData, setUserData] = useState<UserData | null>(null);
 
     useEffect(() => {
-        axios
-            .get(`${API_URL}/api/accounts/id/${id}`, {
-                headers: {
-                    Authorization: token,
-                },
-            })
-            .then(({ data }) => {
-                setUsername(data.username);
-                setVerified(true);
-                setVerifiedCertain(true);
-            })
-            .catch((e: AxiosError) => {
-                console.log(e);
-                setVerified(false);
-                setVerifiedCertain(true);
-            });
-        axios
-            .get<{}, { data: PublicUser }>(`${API_URL}/api/accounts/${name}`)
-            .then(({ data }) => {
-                setUsername(data.username);
-                setUser(data);
-                setEAll(data.easy_problems_count);
-                setMAll(data.medium_problems_count);
-                setHALL(data.hard_problems_count);
-                setESolved(data.problems_solved_easy);
-                setMSolved(data.problems_solved_medium);
-                setHSolved(data.problems_solved_hard);
-            })
-            .catch((e: AxiosError) => {
-                console.log(e);
-            });
-    }, []);
+        const fetchData = async () => {
+            setIsLoading(true);
+            setError("");
+            
+            try {
+                if (id) {
+                    const response = await axios.get(`${API_URL}/api/accounts/id/${id}`, {
+                        headers: { Authorization: token },
+                    });
+                    setUserData(response.data);
+                }
+            } catch (e) {
+                const error = e as Error | AxiosError;
+                console.error("Error fetching profile:", error);
+                setError(error.message || "Failed to load profile");
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [token, id]);
+
+    if (isLoading) {
+        return (
+            <div className="bg-[#1a1a1a] min-h-screen">
+                <MainHeading data={{ status: "none" }} />
+                <div className="flex items-center justify-center h-[60vh]">
+                    <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-white"></div>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="bg-[#1a1a1a] min-h-screen">
+                <MainHeading data={{ status: "none" }} />
+                <div className="flex items-center justify-center h-[60vh] text-red-500">
+                    <div className="bg-[#282828] p-6 rounded-lg border border-[#3e3e3e]">
+                        {error}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
-        <div>
-            {verifiedCertain && verified ? (
-                <MainHeading
-                    data={{
-                        username: username,
-                        status: "loggedin",
-                        items: [
-                            { text: "Problem List", link_path: "/problemset" },
-                        ],
-                    }}
-                />
-            ) : verifiedCertain === true && verified === false ? (
-                <MainHeading
-                    data={{
-                        status: "not-loggedin",
-                    }}
-                />
-            ) : (
-                <MainHeading
-                    data={{
-                        status: "none",
-                    }}
-                />
-            )}
-            {user != null ? (
+        <div className="bg-[#1a1a1a] min-h-screen">
+            <MainHeading 
+                data={{
+                    username: userData?.username || "",
+                    status: "loggedin",
+                    items: [{ text: "Problem List", link_path: "/problemset" }],
+                }}
+            />
+            
+            {userData && (
                 <>
-                    <div className="w-[calc(100%-72px)] h-[260px] sm:h-[160px] bg-black mx-auto mt-[8px] rounded-lg border border-borders">
-                        <div
-                            id="main"
-                            className="flex flex-col sm:flex-row h-fit"
-                        >
-                            <div id="porfile-pic">
-                                <div className="w-[80px] h-[80px] mt-[40px] border border-borders sm:ml-[50px] mx-auto rounded-lg"></div>
+                    {/* Profile Header Section */}
+                    <div className="w-[calc(100%-72px)] bg-[#282828] mx-auto mt-[8px] rounded-lg border border-[#3e3e3e] p-6">
+                        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+                            {/* Profile Picture */}
+                            <div className="w-24 h-24 bg-[#3e3e3e] rounded-full flex items-center justify-center">
+                                <span className="text-4xl text-white">{userData.username[0]?.toUpperCase()}</span>
                             </div>
-                            <div className="flex flex-col w-[280px] text-center sm:text-left mx-auto sm:ml-0">
-                                <div
-                                    id="username"
-                                    className="text-[28px] font-bold mt-[20px] sm:mt-[40px] text-white sm:ml-[30px] ml-0"
-                                >
-                                    {user.username}
-                                </div>
-                                <div
-                                    id="username"
-                                    className="text-[18px] mt-[6px] text-text_2 sm:ml-[30px] ml-0"
-                                >
-                                    Rank: {user.rank}
-                                </div>
-                            </div>
-                            <div className="md:flex hidden flex-row absolute right-[90px]">
-                                <div className="w-[80px] h-[80px] mt-[40px] border border-borders ml-[20px] rounded-lg relative">
-                                    <i className="bi bi-x-lg text-borders absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2"></i>
-                                </div>
-                                <div className="w-[80px] h-[80px] mt-[40px] border border-borders ml-[20px] rounded-lg relative">
-                                    <i className="bi bi-x-lg text-borders absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2"></i>
-                                </div>
-                                <div className="w-[80px] h-[80px] mt-[40px] border border-borders ml-[20px] rounded-lg relative">
-                                    <i className="bi bi-x-lg text-borders absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2"></i>
+                            
+                            {/* User Info */}
+                            <div className="flex-1">
+                                <h1 className="text-3xl font-bold text-white mb-2">{userData.username}</h1>
+                                <div className="text-[#8a8a8a] mb-4">{userData.email}</div>
+                                
+                                {/* Stats Grid */}
+                                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-4">
+                                    <div className="stat-card">
+                                        <div className="text-[#8a8a8a]">Problems Solved</div>
+                                        <div className="text-xl font-bold text-white">{userData.problems_solved.length}</div>
+                                    </div>
+                                    <div className="stat-card">
+                                        <div className="text-[#8a8a8a]">Problems Attempted</div>
+                                        <div className="text-xl font-bold text-white">{userData.problems_attempted.length}</div>
+                                    </div>
+                                    <div className="stat-card">
+                                        <div className="text-[#8a8a8a]">Total Submissions</div>
+                                        <div className="text-xl font-bold text-white">{userData.submissions.length}</div>
+                                    </div>
+                                    <div className="stat-card">
+                                        <div className="text-[#8a8a8a]">Success Rate</div>
+                                        <div className="text-xl font-bold text-white">
+                                            {userData.submissions.length > 0 
+                                                ? Math.round((userData.problems_solved.length / userData.submissions.length) * 100)
+                                                : 0}%
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div className="flex lg:flex-row sm:flex-col flex-col w-[calc(100%-72px)] mx-auto justify-between">
-                        <div className="lg:w-[calc(40%-4px)] sm:w-full h-[240px] bg-black mt-[8px] rounded-lg border border-borders">
-                            <div className="text-[22px] font-bold mt-[40px] text-white ml-[50px]">
-                                Community Stats
-                            </div>
-                            <div className="mt-[18px] text-[14px] ml-[50px]">
-                                <span className="text-text_2">Views:</span>{" "}
-                                {user.views}
-                            </div>
-                            <div className="mt-[18px] text-[14px] ml-[50px]">
-                                <span className="text-text_2">Solutions:</span>{" "}
-                                {user.solution_count}
-                            </div>
-                            <div className="mt-[18px] text-[14px] ml-[50px] mb-[40px]">
-                                <span className="text-text_2">Reputation:</span>{" "}
-                                {user.reputation_count}
-                            </div>
-                        </div>
-                        <div className="lg:w-[calc(60%-4px)] sm:w-full sm:h-[240px] h-[450px] bg-black mt-[8px] rounded-lg border border-borders relative">
-                            <div className="flex sm:flex-row flex-col justify-between">
-                                <div>
-                                    <div className="text-[22px] font-bold mt-[40px] text-white ml-[50px]">
-                                        Solved Problems
-                                    </div>
-                                    <div className="text-[72px] font-bold mt-[32px] text-white ml-[50px]">
-                                        {user.problems_solved_count}{" "}
-                                        <span className="text-text_2 text-[14px]">
-                                            {"/ "}
-                                            {user.easy_problems_count +
-                                                user.medium_problems_count +
-                                                user.hard_problems_count}
-                                        </span>
-                                    </div>
+                    {/* Stats Section */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-[calc(100%-72px)] mx-auto mt-4">
+                        {/* Activity Chart */}
+                        <ActivityChart submissions={userData.submissions} />
+
+                        {/* Recent Submissions */}
+                        <div className="bg-[#282828] rounded-lg border border-[#3e3e3e] p-6">
+                            <h2 className="text-xl font-bold text-white mb-6">Recent Submissions</h2>
+                            {userData.submissions.length > 0 ? (
+                                <div className="space-y-4">
+                                    {userData.submissions.slice(0, 5).map((submission, index) => (
+                                        <div key={index} className="submission-card">
+                                            <div className="flex justify-between items-center">
+                                                <div>
+                                                    <div className="text-white font-medium">Problem {index + 1}</div>
+                                                    <div className="text-[#8a8a8a] text-sm">
+                                                        {new Date().toLocaleDateString()}
+                                                    </div>
+                                                </div>
+                                                <div className="text-[#2cbb5d]">Accepted</div>
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
-                                <div className="flex flex-col relative mr-[50px] mt-[40px] w-[200px] sm:w-[280px] ml-[50px] sm:ml-0">
-                                    <div className="text-[14px] relative">
-                                        <div className="flex flex-row justify-between">
-                                            <div className="mb-[8px] text-green-500">
-                                                Easy
-                                            </div>
-                                            <div className="mb-[8px] text-green-500">
-                                                {eSolved}
-                                                {" / "}
-                                                {eAll}
-                                            </div>
-                                        </div>
-                                        <div
-                                            className={`sm:w-[280px] w-[200px] h-[8px] bg-borders mb-[16px] relative after:absolute easy-line after:h-[8px] after:rounded rounded  after:bg-green-500`}
-                                        ></div>
-                                    </div>
-                                    <div className="text-[14px] relative">
-                                        <div className="flex flex-row justify-between">
-                                            <div className="mb-[8px] text-orange-500">
-                                                Medium
-                                            </div>
-                                            <div className="mb-[8px] text-orange-500">
-                                                {mSolved}
-                                                {" / "}
-                                                {mAll}
-                                            </div>
-                                        </div>
-                                        <div
-                                            className={`sm:w-[280px] w-[200px] h-[8px] bg-borders mb-[16px] relative after:absolute medium-line after:h-[8px] after:rounded rounded after:bg-orange-500`}
-                                        ></div>
-                                    </div>
-                                    <div className="text-[14px] relative">
-                                        <div className="flex flex-row justify-between">
-                                            <div className="mb-[8px] text-red-600">
-                                                Hard
-                                            </div>
-                                            <div className="mb-[8px] text-red-600">
-                                                {hSolved}
-                                                {" / "}
-                                                {hAll}
-                                            </div>
-                                        </div>
-                                        <div
-                                            className={`sm:w-[280px] w-[200px] h-[8px] bg-borders mb-[16px] relative after:absolute hard-line after:h-[8px] after:rounded rounded after:bg-red-500`}
-                                        ></div>
-                                        <style>
-                                            {`.easy-line::after { width: ${
-                                                ((eSolved || 0) / (eAll || 1)) *
-                                                100
-                                            }%; }`}
-                                            {`.medium-line::after { width: ${
-                                                ((mSolved || 0) / (mAll || 1)) *
-                                                100
-                                            }%; }`}
-                                            {`.hard-line::after { width: ${
-                                                ((hSolved || 0) / (hAll || 1)) *
-                                                100
-                                            }%; }`}
-                                        </style>
-                                    </div>
+                            ) : (
+                                <div className="text-[#8a8a8a] text-center py-8">
+                                    No submissions yet
                                 </div>
-                            </div>
+                            )}
                         </div>
                     </div>
+
+                    <style>{`
+                        .stat-card {
+                            @apply bg-[#323232] rounded-lg p-4 transition-all duration-300 hover:bg-[#3a3a3a];
+                        }
+                        .submission-card {
+                            @apply bg-[#323232] rounded-lg p-4 transition-all duration-300 hover:bg-[#3a3a3a];
+                        }
+                    `}</style>
                 </>
-            ) : (
-                <></>
             )}
         </div>
     );

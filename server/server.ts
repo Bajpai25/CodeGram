@@ -5,7 +5,7 @@ import router from "./routes/index";
 import { customCors } from "./middlewares/cors";
 
 const MONGODB_URI: string | undefined = process.env.MONGODB_URI;
-const PORT: number = Number(process.env.PORT) || 5000;
+const PORT: number = Number(process.env.PORT) || 5001;
 
 // Validate MongoDB URI
 if (!MONGODB_URI) {

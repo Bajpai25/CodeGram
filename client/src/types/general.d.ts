@@ -81,6 +81,7 @@ interface PublicUser {
     views: number;
     solution_count: number;
     reputation_count: number;
+    submission_count: number;
 }
 
 type Sort = "asc" | "des" | "";

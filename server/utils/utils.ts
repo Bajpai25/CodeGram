@@ -3,6 +3,8 @@ import UserModel from "../models/user";
 import { Document } from "mongoose";
 import { DProblem } from "../models/problem";
 
+export type Sort = "" | "asc" | "desc";
+
 export async function existsUsername(username: string) {
     const user = await UserModel.findOne({ username: username });
     return !(user == null);

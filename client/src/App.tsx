@@ -8,6 +8,10 @@ import LoginPage from "./pages/LoginPage";
 import ErrorPage from "./pages/ErrorPage";
 import ProfilePage from "./pages/ProfilePage";
 import SettingPage from "./pages/SettingPage";
+import RoadmapsPage from "./pages/RoadmapsPage";
+import CompetePage from "./pages/CompetePage";
+import ExplorePage from "./pages/ExplorePage";
+import MessagesPage from "./pages/MessagePage";
 
 export const TOKEN_STORAGE_KEY = "authToken";
 export const ID_STORAGE_KEY = "id";
@@ -46,6 +50,10 @@ function App() {
                         path="/"
                         element={<LandingPage token={token} id={id} />}
                     />
+                    <Route path="/roadmaps" element={<RoadmapsPage token={token} id={id} />} />
+                    <Route path="/compete" element={<CompetePage token={token} id={id} />} />
+                    <Route path="/explore" element={<ExplorePage token={token} id={id} />} />
+                    <Route path="/messages" element={<MessagesPage token={token} id={id} />} />
                     <Route
                         path="/problemset"
                         element={<ProblemSet token={token} id={id} />}

@@ -128,7 +128,7 @@ const ProfilePage = ({
                 data={{
                     username: userData?.username || "",
                     status: "loggedin",
-                    items: [{ text: "Problem List", link_path: "/problemset" }],
+                    items: [{ text: "Problem List", link_path: "/problemset", icon: "bi-list-check" }],
                 }}
             />
             

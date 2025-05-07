@@ -29,7 +29,7 @@ const MainHeading = ({ data }: { data?: MainHeadingData }) => {
         { text: "Roadmaps", link_path: "/roadmaps", icon: "bi-map" },
         { text: "Compete", link_path: "/compete", icon: "bi-trophy" },
         { text: "Explore", link_path: "/explore", icon: "bi-compass" },
-        { text: "Messages", link_path: "/messages", icon: "bi-chat-dots" }
+        { text: "CodeChat", link_path: "https://codegramxcodechat.onrender.com/", icon: "bi-chat-dots" }
     ];
 
     // Use provided items or default items

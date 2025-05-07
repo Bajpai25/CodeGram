@@ -11,11 +11,12 @@ import SettingPage from "./pages/SettingPage";
 import RoadmapsPage from "./pages/RoadmapsPage";
 import CompetePage from "./pages/CompetePage";
 import ExplorePage from "./pages/ExplorePage";
-import MessagesPage from "./pages/MessagePage";
+import MessagePage from "./pages/MessagePage";
+// import MessagesPage from "./pages/MessagePage";
 
 export const TOKEN_STORAGE_KEY = "authToken";
 export const ID_STORAGE_KEY = "id";
-export const API_URL = "http://localhost:5001";
+export const API_URL = "http://localhost:5000";
 // export const API_URL = "http://localhost:80";
 
 function App() {
@@ -53,7 +54,7 @@ function App() {
                     <Route path="/roadmaps" element={<RoadmapsPage token={token} id={id} />} />
                     <Route path="/compete" element={<CompetePage token={token} id={id} />} />
                     <Route path="/explore" element={<ExplorePage token={token} id={id} />} />
-                    <Route path="/messages" element={<MessagesPage token={token} id={id} />} />
+                    <Route path="/messages" element = {<MessagePage/>}/>
                     <Route
                         path="/problemset"
                         element={<ProblemSet token={token} id={id} />}

@@ -8,6 +8,8 @@ import LoginPage from "./pages/LoginPage";
 import ErrorPage from "./pages/ErrorPage";
 import ProfilePage from "./pages/ProfilePage";
 import SettingPage from "./pages/SettingPage";
+import OnboardingFlow from "./pages/OnboardingFlow"
+import Roadmap from "./pages/Roadmap";
 
 export const TOKEN_STORAGE_KEY = "authToken";
 export const ID_STORAGE_KEY = "id";
@@ -46,6 +48,8 @@ function App() {
                         path="/"
                         element={<LandingPage token={token} id={id} />}
                     />
+                    <Route path="/onboarding" element={<OnboardingFlow />} />
+                    <Route path="/roadmap" element={<Roadmap/>}/>
                     <Route
                         path="/problemset"
                         element={<ProblemSet token={token} id={id} />}

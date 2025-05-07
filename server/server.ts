@@ -44,6 +44,8 @@ app.get("/health", (req, res) => {
     res.status(200).json({ success: true, message: "Server is running" });
 });
 
+
+
 // Global Error Handling Middleware
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
     console.error("Unhandled Error:", err);

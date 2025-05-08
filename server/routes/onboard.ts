@@ -22,10 +22,10 @@ export const createOnboard = async (req: Request, res: Response) => {
     } = req.body;
 
     // Check if userId is already in the database
-    const existingUser = await Onboard.findOne({ userId });
-    if (existingUser) {
-      return res.status(400).json({ message: 'User with this userId already exists' });
-    }
+    // const existingUser = await Onboard.findOne({ userId });
+    // if (existingUser) {
+    //   return res.status(400).json({ message: 'User with this userId already exists' });
+    // }
 
     // Create a new user document
     const newOnboard = new Onboard({

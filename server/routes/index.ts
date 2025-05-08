@@ -2,7 +2,8 @@ import express from "express";
 import problem from "./problem";
 import accounts from "./accounts";
 import { createOnboard, getOnboard } from "./onboard";
-import { generateRoadmap ,addRoadmap , fetchAllRoadmaps , fetchRoadmapById } from "./roadmap";
+import { generateRoadmap ,addRoadmap , fetchAllRoadmaps , fetchRoadmapById , fetch_roadmap_by_userId } from "./roadmap";
+import { createPeer, getPeerById, getAllPeers } from "./peer";
 
 const router = express.Router();
 
@@ -19,6 +20,13 @@ router.get('/roadmaps', fetchAllRoadmaps);
 
 // Endpoint to fetch a specific roadmap by ID
 router.get('/roadmap/:roadmapId', fetchRoadmapById);
-  
+
+// Endpoint to fetch a specific roadmap by userId
+
+router.get('/roadmap/user/:userId', fetch_roadmap_by_userId);
+
+router.post('/peers', createPeer);
+router.get('/peers/:id', getPeerById);
+router.get('/peers', getAllPeers);
 
 export default router;

@@ -8,7 +8,7 @@ import type { SelectChangeEvent } from "@mui/material"
 import { CheckCircle, ArrowRight } from "lucide-react"
 import { TypeAnimation } from "react-type-animation"
 import axios from "axios"
-import {useNavigate} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 
 const steps = [
   "Name",
@@ -128,13 +128,15 @@ const OnboardingFlow = () => {
       console.log(parsedData);
   
       // Third API call - Create Roadmap
-      const roadmapCreated = await axios.post('http://localhost:5001/api/roadmap', parsedData.roadmap);
+      const data={...parsedData.roadmap , userId}
+      const roadmapCreated = await axios.post('http://localhost:5001/api/roadmap', data);
       if (roadmapCreated.status === 200) {
         console.log(roadmapCreated);
       }
-  
+      localStorage.setItem("roadmapId", roadmapCreated.data.roadmap._id);
+       setLoadingRoadmap(false);
       // Pass the parsed data to the /roadmap route using navigate
-      navigate("/roadmap", { state: { roadmap: parsedData } });
+      navigate("/roadmap");
   
     } catch (error) {
       console.error("Error in handleSubmit:", error);
@@ -309,6 +311,7 @@ const OnboardingFlow = () => {
             You're all set to begin your coding journey. Get ready to solve challenges and level up your skills!
           </motion.p>
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}>
+            <Link to="/roadmap">
             <Button
               variant="contained"
               onClick={() => {
@@ -327,6 +330,7 @@ const OnboardingFlow = () => {
               Start Coding Now
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
+            </Link>
           </motion.div>
         </motion.div>
       </div>

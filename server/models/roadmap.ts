@@ -13,6 +13,7 @@ const monthSchema = new Schema({
 
 // Define the main Roadmap schema
 const roadmapSchema = new Schema({
+  userId: { type: String, required: true },
   goal: { type: String, required: true },
   monthlyCommitment: { type: String, required: true },
   months: [monthSchema],

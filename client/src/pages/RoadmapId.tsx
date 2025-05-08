@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
-import { Code, Calendar, Clock, ChevronRight, CheckCircle2, Lightbulb, Rocket, Sparkles,Users, GraduationCap } from 'lucide-react';
+import { Code, Calendar, Clock, ChevronRight, CheckCircle2, Lightbulb, Rocket, Sparkles, GraduationCap } from 'lucide-react';
 import axios from 'axios';
 
 
@@ -14,28 +14,12 @@ interface Month {
     resources: string[];
   }
 
-  interface Peer {
-    _id: string;
-    name: string;
-    linkedInLink: string;
-    education: string;
-    skills: string[];
-    achievements: string;
-    batch: string;
-    company: string;
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
-  }
-  
-
-const Roadmap = () => {
+const RoadmapId = () => {
 
 
 
- const [peers, setPeers] = useState<Peer[]>([]);
 
-   
+
   const location = useLocation();
   const roadmapFromState = location.state?.roadmap; 
   console.log("Roadmap from state:", roadmapFromState);
@@ -43,28 +27,6 @@ const Roadmap = () => {
   const [activeMonth, setActiveMonth] = useState(0);
   const [progress, setProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-
-  async function fetchPeerData() {
-    setIsLoading(true);
-    try {
-      const res = await axios("http://localhost:5001/api/peers");
-      if (res.status === 200) {
-        setPeers(res.data);
-      }
-    } catch (error) {
-      console.error("Error fetching peers:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    fetchPeerData();
-  }, []);
-
-
-
-
 
   // Default roadmap data in case nothing is passed
   const defaultRoadmap = {
@@ -126,9 +88,9 @@ const Roadmap = () => {
   };
 
   const [roadmapData, setRoadmapData] = useState(roadmapFromState? roadmapFromState : defaultRoadmap);
-const roadmapId=localStorage.getItem("roadmapId")
+const {id}=useParams()
  async function get_roadmap_by_id(){
-  const response=await axios(`http://localhost:5001/api/roadmap/${roadmapId}`)
+  const response=await axios(`http://localhost:5001/api/roadmap/${id}`)
   if(response.status===200){
     console.log(response.data)
     setRoadmapData(response.data)
@@ -140,15 +102,15 @@ const roadmapId=localStorage.getItem("roadmapId")
  },[])
 
   useEffect(() => {
-    // if (roadmapFromState && typeof roadmapFromState === 'object') {
-    // //   const mergedRoadmap = {
-    // //     ...defaultRoadmap,
-    // //     ...roadmapFromState,
-    // //     monthlyProgress: roadmapFromState.monthlyProgress || defaultRoadmap.monthlyProgress,
-    // //     successTips: roadmapFromState.successTips || defaultRoadmap.successTips
-    // //   };
-    //   setRoadmapData(roadmapFromState.data);
-    // }
+    if (roadmapFromState && typeof roadmapFromState === 'object') {
+    //   const mergedRoadmap = {
+    //     ...defaultRoadmap,
+    //     ...roadmapFromState,
+    //     monthlyProgress: roadmapFromState.monthlyProgress || defaultRoadmap.monthlyProgress,
+    //     successTips: roadmapFromState.successTips || defaultRoadmap.successTips
+    //   };
+      setRoadmapData(roadmapFromState.roadmap);
+    }
     console.log(roadmapData)
 
     const timer = setTimeout(() => {
@@ -217,7 +179,7 @@ const roadmapId=localStorage.getItem("roadmapId")
     );
   }
 
-  const monthlyProgress:Month[] = Array.isArray(roadmapData.months) ? roadmapData.months : [];
+  const monthlyProgress = Array.isArray(roadmapData.months) ? roadmapData.months : [];
   const successTips: string[] = Array.isArray(roadmapData.successTips) ? roadmapData.successTips : [];
   return (
     <div className="min-h-screen bg-gradient-to-b from-black to-gray-900 text-white overflow-x-hidden pb-20">
@@ -594,105 +556,7 @@ const roadmapId=localStorage.getItem("roadmapId")
           </div>
         )}
       </div>
-       {/* Connect with Peers Section - Added before Success Tips */}
-       <section className="relative z-20 py-16 mt-8 bg-black/50 backdrop-blur-lg">
-        <div className="max-w-7xl mx-auto px-4">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-3xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-red-600"
-          >
-            Connect with Peers & Developers
-          </motion.h2>
 
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-            {peers.length > 0 ? (
-              peers.map((peer, index) => (
-                <motion.div
-                  key={peer._id}
-                  variants={itemVariants}
-                  whileHover={{
-                    y: -5,
-                    boxShadow: "0 10px 25px -5px rgba(249, 115, 22, 0.2)",
-                    borderColor: "rgba(249, 115, 22, 0.5)",
-                  }}
-                  className="h-full"
-                >
-                  <Link to={`/peer/${peer._id}`}>
-                    <div className="h-full rounded-xl overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 hover:border-orange-500/30 transition-all duration-300">
-                      <div className="p-6 pb-2">
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <h3 className="text-white text-xl font-bold">{peer.name}</h3>
-                            <p className="text-gray-400">{peer.company || "Independent Developer"}</p>
-                          </div>
-                          <div className="h-10 w-10 rounded-full bg-orange-500/10 flex items-center justify-center">
-                            <Users className="h-5 w-5 text-orange-500" />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="px-6 py-4">
-                        <div className="mb-4">
-                          <p className="text-sm text-gray-400 mb-1">Education</p>
-                          <p className="text-gray-300">{peer.education || "Not specified"}</p>
-                        </div>
-                        <div className="mb-4">
-                          <p className="text-sm text-gray-400 mb-1">Batch</p>
-                          <p className="text-gray-300">{peer.batch || "Not specified"}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-gray-400 mb-2">Skills</p>
-                          <div className="flex flex-wrap gap-2">
-                            {Array.isArray(peer.skills) && peer.skills.length > 0 ? (
-                              peer.skills.slice(0, 4).map((skill, i) => (
-                                <span
-                                  key={i}
-                                  className="px-2 py-1 rounded-md bg-gray-800/50 text-orange-400 border border-orange-500/20 text-sm"
-                                >
-                                  {skill}
-                                </span>
-                              ))
-                            ) : (
-                              <span className="text-gray-500">No skills listed</span>
-                            )}
-                            {Array.isArray(peer.skills) && peer.skills.length > 4 && (
-                              <span className="px-2 py-1 rounded-md bg-gray-800/50 text-orange-400 border border-orange-500/20 text-sm">
-                                +{peer.skills.length - 4} more
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="px-6 py-4 border-t border-gray-800">
-                        <button className="w-full text-orange-500 hover:text-orange-400 hover:bg-orange-500/10 py-2 px-4 rounded-md flex items-center justify-center">
-                          View Profile <ChevronRight className="ml-2 h-4 w-4" />
-                        </button>
-                      </div>
-                    </div>
-                  </Link>
-                </motion.div>
-              ))
-            ) : (
-              <div className="col-span-full text-center py-10">
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-gray-400">
-                  <Users className="h-12 w-12 mx-auto mb-4 text-orange-500/50" />
-                  <p className="text-lg">No peers available at the moment</p>
-                  <p className="text-sm mt-2">Check back later for developer connections</p>
-                </motion.div>
-              </div>
-            )}
-          </motion.div>
-        </div>
-      </section>
-      
       <section className="relative z-20 py-16 mt-8 bg-black/50 backdrop-blur-lg">
         <div className="max-w-7xl mx-auto px-4">
           <motion.h2 
@@ -769,4 +633,4 @@ const roadmapId=localStorage.getItem("roadmapId")
   );
 };
 
-export default Roadmap;
+export default RoadmapId;

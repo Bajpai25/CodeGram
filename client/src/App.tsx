@@ -15,6 +15,9 @@ import MessagePage from "./pages/MessagePage";
 // import MessagesPage from "./pages/MessagePage";
 import OnboardingFlow from "./pages/OnboardingFlow"
 import Roadmap from "./pages/Roadmap";
+import RoadmapId from "./pages/RoadmapId";
+import UserCreation from "./pages/UserCreation";
+import Peer from "./pages/Peer";
 
 export const TOKEN_STORAGE_KEY = "authToken";
 export const ID_STORAGE_KEY = "id";
@@ -59,6 +62,9 @@ function App() {
                     <Route path="/codechat" element = {<MessagePage/>}/>
                     <Route path="/onboarding" element={<OnboardingFlow />} />
                     <Route path="/roadmap" element={<Roadmap/>}/>
+                    <Route path="/roadmap/:id" element={<RoadmapId/>}/>
+                    <Route path="/peer" element={<UserCreation/>}/>
+                    <Route path="/peer/:id" element={<Peer token={token} user_id={id}/>}/>
                     <Route
                         path="/problemset"
                         element={<ProblemSet token={token} id={id} />}

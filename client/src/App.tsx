@@ -13,6 +13,8 @@ import CompetePage from "./pages/CompetePage";
 import ExplorePage from "./pages/ExplorePage";
 import MessagePage from "./pages/MessagePage";
 // import MessagesPage from "./pages/MessagePage";
+import OnboardingFlow from "./pages/OnboardingFlow"
+import Roadmap from "./pages/Roadmap";
 
 export const TOKEN_STORAGE_KEY = "authToken";
 export const ID_STORAGE_KEY = "id";
@@ -55,6 +57,8 @@ function App() {
                     <Route path="/compete" element={<CompetePage token={token} id={id} />} />
                     <Route path="/explore" element={<ExplorePage token={token} id={id} />} />
                     <Route path="/messages" element = {<MessagePage/>}/>
+                    <Route path="/onboarding" element={<OnboardingFlow />} />
+                    <Route path="/roadmap" element={<Roadmap/>}/>
                     <Route
                         path="/problemset"
                         element={<ProblemSet token={token} id={id} />}

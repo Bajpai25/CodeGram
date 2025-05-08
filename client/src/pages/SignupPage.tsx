@@ -22,7 +22,51 @@ const SignupPage = ({
     const [isLoading, setisLoading] = useState<boolean>(false);
     const navigate = useNavigate();
 
-    const handleSignUp = () => {
+
+
+    // const handleSignUp = async() => {
+    //     setisLoading(true);
+    //     try {
+    //         if (password !== confirmPassword) {
+    //             setMessage(
+    //                 "Password and confirm password do not match. Please make sure you enter the same password in both fields."
+    //             );
+    //             return;
+    //         }
+    //         axios
+    //             .post(`${API_URL}/api/accounts/signup`, {
+    //                 username: username,
+    //                 email: email,
+    //                 password: password,
+    //             })
+    //             .then(({ data }) => {
+    //                 Data.setTokenFunction(data.token);
+    //                 Data.setIdFunction(data.id);
+    //                 const onboard= await getOnboard();
+    //                 if(onboard===false){
+    //                     navigate("/onboard");
+    //                 }
+    //                 else{
+    //                     navigate("/problemset");
+    //                 }
+    //             })
+    //             .catch((e: AxiosError) => {
+    //                 setisLoading(false);
+    //                 setMessage(
+    //                     (
+    //                         e.response?.data as {
+    //                             success: boolean;
+    //                             message: string;
+    //                         }
+    //                     ).message
+    //                 );
+    //             });
+    //     } catch (error) {
+    //         console.error("Sign-up failed:", error);
+    //     }
+    // };
+
+    const handleSignUp = async () => {
         setisLoading(true);
         try {
             if (password !== confirmPassword) {
@@ -31,32 +75,24 @@ const SignupPage = ({
                 );
                 return;
             }
-            axios
-                .post(`${API_URL}/api/accounts/signup`, {
-                    username: username,
-                    email: email,
-                    password: password,
-                })
-                .then(({ data }) => {
-                    Data.setTokenFunction(data.token);
-                    Data.setIdFunction(data.id);
-                    navigate("/problemset");
-                })
-                .catch((e: AxiosError) => {
-                    setisLoading(false);
-                    setMessage(
-                        (
-                            e.response?.data as {
-                                success: boolean;
-                                message: string;
-                            }
-                        ).message
-                    );
-                });
-        } catch (error) {
-            console.error("Sign-up failed:", error);
+
+            const { data } = await axios.post(`${API_URL}/api/accounts/signup`, {
+                username,
+                email,
+                password,
+            });
+
+            Data.setTokenFunction(data.token);
+            Data.setIdFunction(data.id);
+            navigate('/onboarding');
+        } catch (e: AxiosError | any) {
+            setisLoading(false);
+            setMessage(
+                e.response?.data?.message || "Something went wrong during signup."
+            );
         }
     };
+
     return (
         <>
             <Link to={"/"}>

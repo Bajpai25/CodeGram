@@ -9,6 +9,7 @@ interface NavItem {
     text: string;
     link_path: string;
     icon: string;
+    isExternal?: boolean;
   }
 
 // Define the MainHeadingData type
@@ -29,7 +30,7 @@ const MainHeading = ({ data }: { data?: MainHeadingData }) => {
         { text: "Roadmaps", link_path: "/roadmaps", icon: "bi-map" },
         { text: "Compete", link_path: "/compete", icon: "bi-trophy" },
         { text: "Explore", link_path: "/explore", icon: "bi-compass" },
-        { text: "CodeChat", link_path: "https://codegramxcodechat.onrender.com/", icon: "bi-chat-dots" }
+        { text: "CodeChat", link_path: "https://codegramxcodechat.onrender.com/", icon: "bi-chat-dots", isExternal: true }
     ];
 
     // Use provided items or default items
@@ -57,16 +58,33 @@ const MainHeading = ({ data }: { data?: MainHeadingData }) => {
                 {/* Desktop Navigation Links with Icons */}
                 <div className="hidden md:flex">
                 {navItems.map((elem, index) => (
-                    <Link
-                    key={index}
-                    to={elem.link_path}
-                    className="mt-[15px] font-bold text-lg text-[14px] h-fit px-[20px] text-[#fff] hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-orange-500 hover:to-red-600 transition group"
-                    >
-                    <div id={elem.text} className="flex items-center">
-                        <i className={`${elem.icon} mr-2 text-base`}></i>
-                        {elem.text}
-                    </div>
-                    </Link>
+                    elem.isExternal ? (
+                        // External link for CodeChat
+                        <a
+                            key={index}
+                            href={elem.link_path}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="mt-[15px] font-bold text-lg text-[14px] h-fit px-[20px] text-[#fff] hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-orange-500 hover:to-red-600 transition group"
+                        >
+                            <div id={elem.text} className="flex items-center">
+                                <i className={`${elem.icon} mr-2 text-base`}></i>
+                                {elem.text}
+                            </div>
+                        </a>
+                    ) : (
+                        // Internal links
+                        <Link
+                            key={index}
+                            to={elem.link_path}
+                            className="mt-[15px] font-bold text-lg text-[14px] h-fit px-[20px] text-[#fff] hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-orange-500 hover:to-red-600 transition group"
+                        >
+                            <div id={elem.text} className="flex items-center">
+                                <i className={`${elem.icon} mr-2 text-base`}></i>
+                                {elem.text}
+                            </div>
+                        </Link>
+                    )
                 ))}
                 </div>
                 

@@ -77,6 +77,7 @@ const SettingPage = ({
                             {
                                 text: "Problem List",
                                 link_path: "/problemset",
+                                icon: "bi-list-check",
                             },
                         ],
                     }}

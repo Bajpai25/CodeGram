@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios, { AxiosError } from "axios";
 import { API_URL } from "../App";
 import Loading from "../components/Loading";
+import { Sparkles, MessageSquare, Laptop, Brain } from "lucide-react";
 
 const LandingPage = ({
     token,
@@ -16,11 +17,14 @@ const LandingPage = ({
     const [username, setUsername] = useState<string>("");
     const [verified, setVerified] = useState<boolean>(false);
     const [verifiedCertain, setVerifiedCertain] = useState<boolean>(false);
+    
     useEffect(() => {
         if (!id) {
             setVerified(false);
             setVerifiedCertain(true);
+            return;
         }
+        
         axios
             .get(`${API_URL}/api/accounts/id/${id}`, {
                 headers: {
@@ -36,7 +40,8 @@ const LandingPage = ({
                 setVerified(false);
                 setVerifiedCertain(true);
             });
-    }, []);
+    }, [id, token]);
+    
     return (
         <div className="text-[14px] overflow-x-hidden min-h-screen bg-gradient-to-b from-black to-gray-900">
             {/* Header Section */}
@@ -73,19 +78,19 @@ const LandingPage = ({
                 {/* Main Content */}
                 {verifiedCertain && verified ? (
                     <div className="relative z-20 pt-[100px] px-4">
-                        <h1 className="text-5xl md:text-6xl text-center font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-red-600">
+                        <h1 className="text-6xl md:text-6xl text-center font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-red-600">
                             <TypeAnimation
                                 sequence={[
                                     `Welcome back ${username}!`,
                                     2000,
-                                    `Ready for more challenges, ${username}?`,
+                                    `Ready for more challenges?`,
                                     2000,
                                     "Let's dive in!",
                                 ]}
                                 wrapper="span"
                                 cursor={true}
                                 style={{
-                                    fontSize: "1em",
+                                    fontSize: "1.5em",
                                     display: "inline-block",
                                 }}
                             />
@@ -152,6 +157,18 @@ const LandingPage = ({
                 )}
             </div>
 
+            <div className="relative overflow-hidden">
+                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-28 text-center">
+                <Sparkles className="w-12 h-12 mx-auto mb-8 text-orange-500" />
+                <h1 className="text-6xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-orange-800">
+                    Master Coding Through Interactive Learning!
+                </h1>
+                <p className="text-xl md:text-2xl text-white/80 mb-12 max-w-3xl mx-auto">
+                    Experience a revolutionary platform that combines collaborative coding, real-time communication, and intelligent progress tracking.
+                </p>
+                </div>
+            </div>
+
             {/* Features Section */}
             <section className="relative z-20 py-20 bg-black/50 backdrop-blur-lg">
                 <div className="max-w-7xl mx-auto px-4">
@@ -211,25 +228,73 @@ const LandingPage = ({
                     </div>
                 </div>
             </section>
+            
+            {/* Platform Preview */}               
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+                <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-white/5 rounded-3xl transform -skew-y-6"></div>
+                <div className="relative bg-zinc-900 rounded-3xl p-8 border border-zinc-700">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h2 className="text-3xl font-bold mb-6 text-white">Experience Modern Coding Education</h2>
+                        <div className="space-y-4">
+                        <div className="flex items-center gap-3">
+                            <Laptop className="w-6 h-6 text-orange-500" />
+                            <p className="text-white/70">Advanced IDE with real-time compilation</p>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <MessageSquare className="w-6 h-6 text-orange-500" />
+                            <p className="text-white/70">Integrated communication tools</p>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <Brain className="w-6 h-6 text-orange-500" />
+                            <p className="text-white/70">AI-powered learning assistance</p>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="relative">
+                        <img
+                        src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=800"
+                        alt="Coding Interface"
+                        className="rounded-lg shadow-2xl"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent rounded-lg"></div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
 
             {/* Call to Action Section */}
             <section className="relative z-20 py-20 bg-black/50 backdrop-blur-lg">
                 <div className="max-w-4xl mx-auto text-center px-4">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-red-600">
+                    <h2 className="text-4xl md:text-4xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-red-600">
                         Ready to Begin Your Coding Journey?
                     </h2>
                     <p className="text-gray-400 mb-8 text-lg">
                         Join thousands of developers who have already leveled up their coding skills with Codegram.
                     </p>
-                    <Link
-                        to="/signup"
-                        className="inline-flex items-center px-8 py-3 text-lg font-semibold text-white bg-gradient-to-r from-orange-500 to-red-600 rounded-lg shadow-lg hover:shadow-orange-500/25 transition-all duration-300 transform hover:-translate-y-1"
-                    >
-                        Start Coding Now
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
-                            <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                        </svg>
-                    </Link>
+                    {verifiedCertain && verified ? (
+                        <Link
+                            to="/problemset"
+                            className="inline-flex items-center px-8 py-3 text-lg font-semibold text-white bg-gradient-to-r from-orange-500 to-red-600 rounded-lg shadow-lg hover:shadow-orange-500/25 transition-all duration-300 transform hover:-translate-y-1"
+                        >
+                            Start Coding Now!
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                            </svg>
+                        </Link>
+                    ) : verifiedCertain === true && verified === false ? (
+                        <Link
+                            to="/signup"
+                            className="inline-flex items-center px-8 py-3 text-lg font-semibold text-white bg-gradient-to-r from-orange-500 to-red-600 rounded-lg shadow-lg hover:shadow-orange-500/25 transition-all duration-300 transform hover:-translate-y-1"
+                        >
+                            Start Coding Now
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                            </svg>
+                        </Link>
+                    ) : null}
                 </div>
             </section>
         </div>

@@ -8,12 +8,17 @@ import LoginPage from "./pages/LoginPage";
 import ErrorPage from "./pages/ErrorPage";
 import ProfilePage from "./pages/ProfilePage";
 import SettingPage from "./pages/SettingPage";
+import RoadmapsPage from "./pages/RoadmapsPage";
+import CompetePage from "./pages/CompetePage";
+import ExplorePage from "./pages/ExplorePage";
+import MessagePage from "./pages/MessagePage";
+// import MessagesPage from "./pages/MessagePage";
 import OnboardingFlow from "./pages/OnboardingFlow"
 import Roadmap from "./pages/Roadmap";
 
 export const TOKEN_STORAGE_KEY = "authToken";
 export const ID_STORAGE_KEY = "id";
-export const API_URL = "http://localhost:5001";
+export const API_URL = "http://localhost:5000";
 // export const API_URL = "http://localhost:80";
 
 function App() {
@@ -48,6 +53,10 @@ function App() {
                         path="/"
                         element={<LandingPage token={token} id={id} />}
                     />
+                    <Route path="/roadmaps" element={<RoadmapsPage token={token} id={id} />} />
+                    <Route path="/compete" element={<CompetePage token={token} id={id} />} />
+                    <Route path="/explore" element={<ExplorePage token={token} id={id} />} />
+                    <Route path="/messages" element = {<MessagePage/>}/>
                     <Route path="/onboarding" element={<OnboardingFlow />} />
                     <Route path="/roadmap" element={<Roadmap/>}/>
                     <Route

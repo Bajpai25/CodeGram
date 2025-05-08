@@ -27,9 +27,9 @@ const MainHeading = ({ data }: { data?: MainHeadingData }) => {
     // Default navigation items with icons
     const defaultNavItems: NavItem[] = [
         { text: "Home", link_path: "/", icon: "bi-house-fill" },
-        { text: "Roadmaps", link_path: "/roadmaps", icon: "bi-map" },
+        { text: "Roadmaps", link_path: "/roadmap", icon: "bi-map" },
         { text: "Compete", link_path: "/compete", icon: "bi-trophy" },
-        { text: "Explore", link_path: "/explore", icon: "bi-compass" },
+        { text: "Onboarding", link_path: "/onboarding", icon: "bi-compass" },
         { text: "CodeChat", link_path: "https://codegramxcodechat.onrender.com/", icon: "bi-chat-dots", isExternal: true }
     ];
 

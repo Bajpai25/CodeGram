@@ -11,8 +11,8 @@ const callDeepSeekForRoadmap = async (userData:any) => {
   try {
     // Construct the dynamic prompt based on user data
     const prompt = `
-    Based on the provided user data, act as a professional carrer counsellor and create a 6-month roadmap to help them become a Software Development Engineer (SDE). The roadmap should include:
-    - **month**: Month number (1 to 6).
+    Based on the provided user data, act as a professional carrer counsellor and create a 3-month roadmap to help them become a Software Development Engineer (SDE). The roadmap should include:
+    - **month**: Month number (1 to 3).
     - **focus**: Main focus of the month (e.g., Frontend, Backend, Full-stack integration or any other technology specific to the user coding goals and their interets).
     - **topics**: Topics to learn each month.
     - **resources**: Recommended resources (books, websites, courses).
@@ -24,7 +24,7 @@ const callDeepSeekForRoadmap = async (userData:any) => {
       "roadmap": {
         "student": "Shashwat",
         "goal": "Full-Stack Developer (Remote)",
-        "timeline": "6 Months",
+        "timeline": "3 Months",
         "monthlyCommitment": "1-5 hours/day",
         "months": [
           {
@@ -43,7 +43,7 @@ const callDeepSeekForRoadmap = async (userData:any) => {
             "resources": ["React Docs", "Scrimba React Course", "Frontend Masters React Path"],
             "codingChallenges": ["Build a weather app", "Create a to-do list with drag-and-drop"]
           },
-          // Continue for months 3-6 with similar structure
+          // Continue for month 3 with similar structure
         ],
         "successTips": ["Daily code practice", "Contribute to open-source", "Join dev communities"]
       }
@@ -118,6 +118,7 @@ export const addRoadmap = async (req: Request, res: Response) => {
       monthlyCommitment: req.body.monthlyCommitment,
       months: req.body.months,
       successTips: req.body.successTips,
+      userId: req.body.userId,
     });
 
     // Save the new roadmap to the database
@@ -164,3 +165,23 @@ export const fetchRoadmapById = async (req: Request, res: Response) => {
     return res.status(500).json({ message: 'Error fetching roadmap by ID' });
   }
 };
+
+
+export const fetch_roadmap_by_userId = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+
+    // Fetch the roadmap by userId
+    const roadmap = await Roadmap.find({ userId });
+
+    if (!roadmap) {
+      return res.status(404).json({ message: 'Roadmap not found' });
+    }
+
+    // Return the roadmap data
+    return res.status(200).json(roadmap);
+  } catch (error) {
+    console.error('Error fetching roadmap by userId:', error);
+    return res.status(500).json({ message: 'Error fetching roadmap by userId' });
+  }
+}

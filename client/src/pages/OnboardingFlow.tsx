@@ -113,14 +113,14 @@ const OnboardingFlow = () => {
       const onboardData = { ...formData, userId };
   
       // First API call
-      const onboardResponse = await axios.post('http://localhost:5001/api/onboard', onboardData);
+      const onboardResponse = await axios.post('https://codegram-backend.onrender.com/api/onboard', onboardData);
       if (onboardResponse.status === 201) {
         setCompleted(true);
       }
   
       // Second API call - Generate Roadmap
       setLoadingRoadmap(true); // Show loading screen
-      const roadmapResponse = await axios.post('http://localhost:5001/api/generate_roadmap', formData);
+      const roadmapResponse = await axios.post('https://codegram-backend.onrender.com/api/generate_roadmap', formData);
       if (roadmapResponse.status === 200) {
         console.log(roadmapResponse);
       }
@@ -129,7 +129,7 @@ const OnboardingFlow = () => {
   
       // Third API call - Create Roadmap
       const data={...parsedData.roadmap , userId}
-      const roadmapCreated = await axios.post('http://localhost:5001/api/roadmap', data);
+      const roadmapCreated = await axios.post('https://codegram-backend.onrender.com/api/roadmap', data);
       if (roadmapCreated.status === 200) {
         console.log(roadmapCreated);
       }

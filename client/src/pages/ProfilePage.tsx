@@ -93,7 +93,7 @@ const ProfilePage = ({
   const userId = localStorage.getItem("id")
   async function get_Roadmaps_by_user_id() {
     try {
-      const res = await axios.get(`http://localhost:5001/api/roadmap/user/${userId}`)
+      const res = await axios.get(`https://codegram-backend.onrender.com/api/roadmap/user/${userId}`)
       if (res.status === 200) {
         setRoadmaps(res.data)
         console.log("Roadmaps loaded:", res.data)

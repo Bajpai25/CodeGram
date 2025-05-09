@@ -90,7 +90,7 @@ const RoadmapId = () => {
   const [roadmapData, setRoadmapData] = useState(roadmapFromState? roadmapFromState : defaultRoadmap);
 const {id}=useParams()
  async function get_roadmap_by_id(){
-  const response=await axios(`http://localhost:5001/api/roadmap/${id}`)
+  const response=await axios(`https://codegram-backend.onrender.com/api/roadmap/${id}`)
   if(response.status===200){
     console.log(response.data)
     setRoadmapData(response.data)

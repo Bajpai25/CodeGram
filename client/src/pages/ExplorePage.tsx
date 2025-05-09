@@ -36,7 +36,7 @@ const ExplorePage = ({
   async function fetchPeerData() {
     setLoading(true);
     try {
-      const res = await axios("http://localhost:5001/api/peers");
+      const res = await axios("https://codegram-backend.onrender.com/api/peers");
       if (res.status === 200) {
         setPeers(res.data);
       }

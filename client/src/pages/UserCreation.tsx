@@ -29,7 +29,7 @@ const UserCreation = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5001/api/peers', formData);
+      const response = await axios.post('https://codegram-backend.onrender.com/api/peers', formData);
       console.log('Peer created:', response.data);
       alert('Profile created successfully!');
       navigate("/explore")

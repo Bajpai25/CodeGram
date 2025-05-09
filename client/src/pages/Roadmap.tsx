@@ -47,7 +47,7 @@ const Roadmap = () => {
   async function fetchPeerData() {
     setIsLoading(true);
     try {
-      const res = await axios("http://localhost:5001/api/peers");
+      const res = await axios("https://codegram-backend.onrender.com/api/peers");
       if (res.status === 200) {
         setPeers(res.data);
       }
@@ -128,7 +128,7 @@ const Roadmap = () => {
   const [roadmapData, setRoadmapData] = useState(roadmapFromState? roadmapFromState : defaultRoadmap);
 const roadmapId=localStorage.getItem("roadmapId")
  async function get_roadmap_by_id(){
-  const response=await axios(`http://localhost:5001/api/roadmap/${roadmapId}`)
+  const response=await axios(`https://codegram-backend.onrender.com/api/roadmap/${roadmapId}`)
   if(response.status===200){
     console.log(response.data)
     setRoadmapData(response.data)

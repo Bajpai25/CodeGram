@@ -38,7 +38,7 @@ const Peer = ({
     async function fetchPeerDetail() {
       setLoading(true)
       try {
-        const res = await axios(`http://localhost:5001/api/peers/${id}`)
+        const res = await axios(`https://codegram-backend.onrender.com/api/peers/${id}`)
         if (res.status === 200) {
           setPeer(res.data)
         }

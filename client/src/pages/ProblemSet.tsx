@@ -72,7 +72,7 @@ const ProblemSet = ({
             .then(({ data }) => {
                 setProblemListData(data);
             });
-    }, []);
+    }, [id, navigate, token]);
 
     return (
         <>

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import MainHeading from "../components/MainHeading";
 import axios from "axios";
 import { API_URL } from "../App";
-import { Sparkles, User, Briefcase, GraduationCap, Award, LinkIcon, Loader } from 'lucide-react';
+import { Sparkles, User, Briefcase, GraduationCap, Award, LinkIcon } from 'lucide-react';
 
 interface Peer {
   _id: string;

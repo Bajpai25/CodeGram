@@ -7,7 +7,7 @@ import axios from "axios"
 import { API_URL } from "../App"
 import { User, Briefcase, GraduationCap, Award, LinkIcon, ArrowLeft, Sparkles } from "lucide-react"
 
-interface Peer {
+interface PeerData {
   _id: string
   name: string
   linkedInLink: string
@@ -31,7 +31,7 @@ const Peer = ({
   const { id } = useParams()
   const isLoggedIn = Boolean(user_id)
 
-  const [peer, setPeer] = useState<Peer | null>(null)
+  const [peer, setPeer] = useState<PeerData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
 
@@ -52,7 +52,7 @@ const Peer = ({
     }
       fetchPeerDetail()
     
-  }, [])
+  }, [id])
 
   if (!isLoggedIn) {
     return (

@@ -88,7 +88,7 @@ const MainHeading = ({ data }: { data?: MainHeadingData }) => {
                 ))}
                 </div>
                 
-                {data?.status === "loggedin" || data?.status == undefined ? (
+                {data?.status === "loggedin" || data?.status === undefined ? (
                 <div className="fixed flex flex-row right-[36px] items-center h-[60px]">
                     {/* Mobile Menu Button */}
                     <div className="inline-block p-[5px] text-[14px] text-[#fff] md:hidden">

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
-import { Code, Calendar, Clock, ChevronRight, CheckCircle2, Lightbulb, Rocket, Sparkles,Users, GraduationCap } from 'lucide-react';
+import { Code, Calendar, Clock, ChevronRight, CheckCircle2, Lightbulb, Rocket, Users, GraduationCap } from 'lucide-react';
 import axios from 'axios';
 import { API_URL } from '../App';
 
@@ -138,6 +138,7 @@ const roadmapId=localStorage.getItem("roadmapId")
 
  useEffect(()=>{
   get_roadmap_by_id()
+ // eslint-disable-next-line react-hooks/exhaustive-deps
  },[])
 
   useEffect(() => {
@@ -164,6 +165,7 @@ const roadmapId=localStorage.getItem("roadmapId")
       clearTimeout(timer);
       clearTimeout(progressTimer);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roadmapFromState]);
 
  const handleMonthClick = (index: number) => {

@@ -28,12 +28,12 @@ const CustomNavbar = ({ data }: { data: Navbar }) => {
               changeCase(data.items[0].text, "kebab");
 
     useEffect(() => {
-        if (activeItemConst == undefined) return;
+        if (activeItemConst === undefined) return;
         const active = document.getElementById(activeItem || activeItemConst);
         const width = active?.clientWidth;
         setActiveItemWidth((width || 0) - 40 + "px");
         setTranslateXActiveItem(active?.offsetLeft || 0);
-    }, []);
+    }, [activeItemConst, activeItem]);
 
     const handleMenuItemsHover = (event: React.MouseEvent<HTMLDivElement>) => {
         const targetWidth = event.currentTarget.offsetWidth;

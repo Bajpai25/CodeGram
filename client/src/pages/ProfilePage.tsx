@@ -130,6 +130,7 @@ const ProfilePage = ({
 
     fetchData()
     get_Roadmaps_by_user_id() // Call the function to get roadmaps by user ID
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token, id, userId])
 
   if (isLoading) {

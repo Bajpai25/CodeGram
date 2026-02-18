@@ -3,7 +3,7 @@ import { useState } from "react";
 import ReactCodeMirror from "@uiw/react-codemirror";
 import { loadLanguage } from "@uiw/codemirror-extensions-langs";
 import { tokyoNight } from "@uiw/codemirror-theme-tokyo-night";
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosError } from "axios";
 import ProblemNavbar from "../components/ProblemNavbar";
 import ProblemDescription from "../components/ProblemDescription";
 import { useNavigate, useParams } from "react-router-dom";
@@ -27,7 +27,7 @@ const ProblemPage = ({
     const [code, setCode] = useState<string>("");
     const explanationRef = useRef<HTMLDivElement>(null);
     const sliderRef = useRef<HTMLDivElement>(null);
-    const [currentLang, setCurrentLang] = useState<string>("javascript");
+    const [currentLang] = useState<string>("javascript");
     const handleSlider = (event: React.MouseEvent<HTMLDivElement>) => {
         const mouseX = event.clientX;
         const newWidth = mouseX - 8;
@@ -135,7 +135,7 @@ const ProblemPage = ({
                 setSubmissionData(data);
             })
             .catch((e) => console.log(e));
-    }, []);
+    }, [id, name, navigate, token]);
 
     useEffect(() => {
         if (activeNavOption === "description") return;
@@ -150,7 +150,7 @@ const ProblemPage = ({
                 }
             })
             .catch((e) => console.error(e));
-    }, [activeNavOption]);
+    }, [activeNavOption, name]);
 
     return (
         <>
@@ -171,7 +171,7 @@ const ProblemPage = ({
                         ref={explanationRef}
                     >
                         <div className="relative w-full bg-black h-[50px] rounded-t-lg overflow-hidden border-b border-borders box-content">
-                            {name != undefined && (
+                            {name !== undefined && (
                                 <ProblemNavbar
                                     data={{
                                         problem_name: name,
@@ -181,7 +181,7 @@ const ProblemPage = ({
                             )}
                         </div>
                         <div className="description-body relative w-full h-[calc(100%-50px)] overflow-y-auto bg-black">
-                            {problemDescriptionData != undefined &&
+                            {problemDescriptionData !== undefined &&
                             activeNavOption === "description" ? (
                                 <>
                                     <ProblemDescription
@@ -194,7 +194,7 @@ const ProblemPage = ({
                                 <></>
                             )}
                             {activeNavOption === "editorial" &&
-                            editorial != "" ? (
+                            editorial !== "" ? (
                                 <Editorial data={editorial} />
                             ) : activeNavOption === "editorial" ? (
                                 <Loading For="pEditorial" />
@@ -202,7 +202,7 @@ const ProblemPage = ({
                                 <></>
                             )}
                             {activeNavOption === "submissions" &&
-                                submissionData != undefined && (
+                                submissionData !== undefined && (
                                     <Submissions
                                         data={{
                                             submissions_list: submissionData,

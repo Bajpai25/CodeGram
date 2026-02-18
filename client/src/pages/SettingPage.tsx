@@ -66,7 +66,7 @@ const SettingPage = ({
                     setVerified(false);
                 }
             });
-    }, []);
+    }, [id, navigate, token]);
     return (
         <>
             {verified ? (

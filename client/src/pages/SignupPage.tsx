@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { API_URL } from "../App";
@@ -85,7 +85,7 @@ const SignupPage = ({
             Data.setTokenFunction(data.token);
             Data.setIdFunction(data.id);
             navigate('/onboarding');
-        } catch (e: AxiosError | any) {
+        } catch (e: any) {
             setisLoading(false);
             setMessage(
                 e.response?.data?.message || "Something went wrong during signup."

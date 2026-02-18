@@ -22,7 +22,7 @@ const Tooltip = ({
             >
                 {children}
             </div>
-            {isHovered && style == undefined ? (
+            {isHovered && style === undefined ? (
                 <div className="select-none absolute mt-[4px] left-1/2 -translate-x-1/2 bg-black border border-borders text-white px-[8px] py-[4px] rounded text-[14px]">
                     {text}
                 </div>

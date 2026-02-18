@@ -2,7 +2,7 @@ import React from 'react'
 
 const MessagePage = () => {
   return (
-    <a href="https://codegramxcodechat.onrender.com/"></a>
+    <a href="https://codegramxcodechat.onrender.com/">Go to CodeChat</a>
   )
 }
 

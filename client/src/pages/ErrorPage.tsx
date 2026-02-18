@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-interface ErrorPage {
+interface ErrorPageData {
     header: string;
     message?: string;
     links?: Links[];
@@ -12,7 +12,7 @@ interface Links {
     link_path: string;
 }
 
-const ErrorPage = ({ data }: { data: ErrorPage }) => {
+const ErrorPage = ({ data }: { data: ErrorPageData }) => {
     return (
         <>
             <div
@@ -32,7 +32,7 @@ const ErrorPage = ({ data }: { data: ErrorPage }) => {
                     <p className="text-text_2 text-[14px] max-w-[350px] mb-[20px]">
                         {data.message}
                     </p>
-                    {data.links != undefined &&
+                    {data.links !== undefined &&
                         data.links.length !== 0 &&
                         data.links.map((elem) => (
                             <Link

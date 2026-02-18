@@ -59,7 +59,7 @@ const OnboardingFlow = () => {
   const [formData, setFormData] = useState(onboardingFields)
   const [loading, setLoading] = useState(false)
   const [completed, setCompleted] = useState(false)
-  const [onboarded, setonBoarded] = useState(false)
+  const [, setonBoarded] = useState(false)
   const [loadingRoadmap, setLoadingRoadmap] = useState(false);
 
   const navigate=useNavigate();
@@ -89,21 +89,7 @@ const OnboardingFlow = () => {
       setCurrentStep(currentStep - 1)
     }
   }
-  function parseRoadmap(roadmapString:any) {
-    try {
-      // Remove unwanted symbols like \n, \t, and extra whitespace
-      const cleanedString = roadmapString.replace(/\\n|\\t|\\r/g, '').trim();
-  
-      // Parse the cleaned string into a JSON object
-      const roadmapJson = JSON.parse(cleanedString);
-  
-      // Return the parsed JSON object
-      return roadmapJson;
-    } catch (error) {
-      console.error("Error cleaning and parsing roadmap:", error);
-      return null;
-    }
-  }
+
   
   const handleSubmit = async () => {
     try {

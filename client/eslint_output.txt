@@ -1,0 +1,74 @@
+﻿
+D:\codegram\CodeGram\client\src\components\CustomNavbar.tsx
+  30:5  warning  React Hook useEffect contains a call to 'setActiveItemWidth'. Without a list of dependencies, this can lead to an infinite chain of updates. To fix this, pass [activeItemConst, activeItem] as a second argument to the useEffect Hook  react-hooks/exhaustive-deps
+
+D:\codegram\CodeGram\client\src\components\MainHeading.tsx
+  91:62  warning  Expected '===' and instead saw '=='  eqeqeq
+
+D:\codegram\CodeGram\client\src\components\ProblemDescription.tsx
+  72:46  warning  Expected '!==' and instead saw '!='  eqeqeq
+  94:49  warning  Expected '!==' and instead saw '!='  eqeqeq
+
+D:\codegram\CodeGram\client\src\components\ProblemList.tsx
+   18:12  warning  'refReset' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  176:23  warning  Expected '!==' and instead saw '!='            eqeqeq
+  361:26  warning  Expected '!==' and instead saw '!='            eqeqeq
+
+D:\codegram\CodeGram\client\src\components\Submissions.tsx
+   50:46  warning  Expected '===' and instead saw '=='  eqeqeq
+  119:36  warning  Expected '!==' and instead saw '!='  eqeqeq
+  131:36  warning  Expected '!==' and instead saw '!='  eqeqeq
+
+D:\codegram\CodeGram\client\src\components\Tooltip.tsx
+  25:33  warning  Expected '===' and instead saw '=='  eqeqeq
+
+D:\codegram\CodeGram\client\src\pages\ErrorPage.tsx
+  15:7   warning  'ErrorPage' is already defined       @typescript-eslint/no-redeclare
+  35:33  warning  Expected '!==' and instead saw '!='  eqeqeq
+
+D:\codegram\CodeGram\client\src\pages\ExplorePage.tsx
+  6:69  warning  'Loader' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\codegram\CodeGram\client\src\pages\MessagePage.tsx
+  5:5  warning  Anchors must have content and the content must be accessible by a screen reader  jsx-a11y/anchor-has-content
+
+D:\codegram\CodeGram\client\src\pages\OnboardingFlow.tsx
+  62:10  warning  'onboarded' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  92:12  warning  'parseRoadmap' is defined but never used        @typescript-eslint/no-unused-vars
+
+D:\codegram\CodeGram\client\src\pages\Peer.tsx
+  24:7  warning  'Peer' is already defined                                                                              @typescript-eslint/no-redeclare
+  55:6  warning  React Hook useEffect has a missing dependency: 'id'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\codegram\CodeGram\client\src\pages\ProblemPage.tsx
+    6:29  warning  'AxiosResponse' is defined but never used                                                                                                 @typescript-eslint/no-unused-vars
+   30:25  warning  'setCurrentLang' is assigned a value but never used                                                                                       @typescript-eslint/no-unused-vars
+  138:8   warning  React Hook useEffect has missing dependencies: 'id', 'name', 'navigate', and 'token'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+  153:8   warning  React Hook useEffect has a missing dependency: 'name'. Either include it or remove the dependency array                                   react-hooks/exhaustive-deps
+  174:35  warning  Expected '!==' and instead saw '!='                                                                                                       eqeqeq
+  184:53  warning  Expected '!==' and instead saw '!='                                                                                                       eqeqeq
+  197:39  warning  Expected '!==' and instead saw '!='                                                                                                       eqeqeq
+  205:48  warning  Expected '!==' and instead saw '!='                                                                                                       eqeqeq
+
+D:\codegram\CodeGram\client\src\pages\ProblemSet.tsx
+  75:8  warning  React Hook useEffect has missing dependencies: 'id', 'navigate', and 'token'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\codegram\CodeGram\client\src\pages\ProfilePage.tsx
+  133:6  warning  React Hook useEffect has a missing dependency: 'get_Roadmaps_by_user_id'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\codegram\CodeGram\client\src\pages\Roadmap.tsx
+    5:80  warning  'Sparkles' is defined but never used                                                                                  @typescript-eslint/no-unused-vars
+  141:4   warning  React Hook useEffect has a missing dependency: 'get_roadmap_by_id'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  167:6   warning  React Hook useEffect has a missing dependency: 'roadmapData'. Either include it or remove the dependency array        react-hooks/exhaustive-deps
+
+D:\codegram\CodeGram\client\src\pages\RoadmapId.tsx
+  129:6  warning  React Hook useEffect has a missing dependency: 'roadmapData'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\codegram\CodeGram\client\src\pages\SettingPage.tsx
+  69:8  warning  React Hook useEffect has missing dependencies: 'id', 'navigate', and 'token'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\codegram\CodeGram\client\src\pages\SignupPage.tsx
+  1:17  warning  'AxiosError' is defined but never used  @typescript-eslint/no-unused-vars
+
+Γ£û 35 problems (0 errors, 35 warnings)
+

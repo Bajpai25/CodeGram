@@ -15,7 +15,7 @@ const ProblemList = ({
     searchFn: Function;
     searchQuery: string;
 }) => {
-    const [refReset, setRefReset] = useState<number>(0);
+    const [, setRefReset] = useState<number>(0);
     const statusRef = useRef<HTMLDivElement>(null);
     const titleRef = useRef<HTMLDivElement>(null);
     const acceptanceRef = useRef<HTMLDivElement>(null);
@@ -173,9 +173,9 @@ const ProblemList = ({
                         Star
                     </div>
                 </div>
-                {data != undefined &&
+                {data !== undefined &&
                 data.length !== 0 &&
-                statusRef.current != null ? (
+                statusRef.current !== null ? (
                     <>
                         {isSortLoading ? (
                             <div className="sort-loading-backdrop w-[calc(100%-18px)] h-[calc(100%-126px)] z-[180] absolute top-[100px] ">
@@ -358,7 +358,7 @@ const ProblemList = ({
                             </div>
                         ))}
                     </>
-                ) : data != undefined && data.length === 0 ? (
+                ) : data !== undefined && data.length === 0 ? (
                     <div className="text-[14px] ml-[30px] text-red-600 h-[40px] leading-[40px]">
                         Problem not found
                     </div>

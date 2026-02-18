@@ -69,7 +69,7 @@ const ProblemDescription = ({ data }: { data: DescriptionData }) => {
                                     <i className="bi bi-hand-thumbs-up"></i>
                                 )}
                             </span>
-                            {data.like_count != undefined && (
+                            {data.like_count !== undefined && (
                                 <span className="text-[#808080] text-[14px]">
                                     {data.like_count}
                                 </span>
@@ -91,7 +91,7 @@ const ProblemDescription = ({ data }: { data: DescriptionData }) => {
                                     <i className="bi bi-hand-thumbs-down"></i>
                                 )}
                             </span>
-                            {data.dislike_count != undefined && (
+                            {data.dislike_count !== undefined && (
                                 <span className="text-[#808080] text-[14px]">
                                     {data.dislike_count}
                                 </span>

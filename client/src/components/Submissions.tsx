@@ -47,7 +47,7 @@ const Submissions = ({ data }: { data: SubmissionsData }) => {
                                 }}
                             ></i>
                         )}
-                        {(status as unknown) == undefined
+                        {(status as unknown) === undefined
                             ? "Runtime Error"
                             : status}
                     </div>
@@ -116,7 +116,7 @@ const Submissions = ({ data }: { data: SubmissionsData }) => {
             ) : (
                 <></>
             )}
-            {data.submissions_list != undefined &&
+            {data.submissions_list !== undefined &&
                 data.submissions_list.length !== 0 && (
                     <>
                         <div className="flex flex-row text-[14px] text-text_2 items-center py-[10px] w-[calc(100%-52px)] ml-[26px]">
@@ -128,7 +128,7 @@ const Submissions = ({ data }: { data: SubmissionsData }) => {
                         </div>
                     </>
                 )}
-            {data.submissions_list != undefined &&
+            {data.submissions_list !== undefined &&
                 data.submissions_list.length !== 0 &&
                 data.submissions_list.map((elem) => (
                     <div className="flex flex-row mb-[8px] text-[14px] px-[16px] py-[10px] ml-[26px] w-[calc(100%-52px)] bg-[#252525] rounded-[4px] overflow-hidden whitespace-nowrap">

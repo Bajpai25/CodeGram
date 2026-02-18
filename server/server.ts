@@ -1,8 +1,8 @@
 import "dotenv/config";
 import express from "express";
 import mongoose from "mongoose";
-import router from "./routes/index";
-import { customCors } from "./middlewares/cors";
+import router from "./routes/index.js";
+import { customCors } from "./middlewares/cors.js";
 
 const MONGODB_URI: string | undefined = process.env.MONGODB_URI;
 const PORT: number = Number(process.env.PORT) || 5001;

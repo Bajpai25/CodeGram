@@ -1,9 +1,9 @@
 import express from "express";
-import problem from "./problem";
-import accounts from "./accounts";
-import { createOnboard, getOnboard } from "./onboard";
-import { generateRoadmap ,addRoadmap , fetchAllRoadmaps , fetchRoadmapById , fetch_roadmap_by_userId } from "./roadmap";
-import { createPeer, getPeerById, getAllPeers } from "./peer";
+import problem from "./problem.js";
+import accounts from "./accounts.js";
+import { createOnboard, getOnboard } from "./onboard.js";
+import { generateRoadmap ,addRoadmap , fetchAllRoadmaps , fetchRoadmapById , fetch_roadmap_by_userId } from "./roadmap.js";
+import { createPeer, getPeerById, getAllPeers } from "./peer.js";
 
 const router = express.Router();
 

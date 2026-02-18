@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import Onboard from '../models/onboard';
+import Onboard from '../models/onboard.js';
 
 // Controller function to create a new Onboard entry
 export const createOnboard = async (req: Request, res: Response) => {

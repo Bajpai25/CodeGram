@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { useParams, Link } from "react-router-dom"
 import MainHeading from "../components/MainHeading"
 import axios from "axios"
+import { API_URL } from "../App"
 import { User, Briefcase, GraduationCap, Award, LinkIcon, ArrowLeft, Sparkles } from "lucide-react"
 
 interface Peer {
@@ -38,7 +39,7 @@ const Peer = ({
     async function fetchPeerDetail() {
       setLoading(true)
       try {
-        const res = await axios(`https://codegram-backend.onrender.com/api/peers/${id}`)
+        const res = await axios(`${API_URL}/api/peers/${id}`)
         if (res.status === 200) {
           setPeer(res.data)
         }

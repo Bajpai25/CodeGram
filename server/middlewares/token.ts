@@ -1,7 +1,7 @@
 import { NextFunction } from "express";
 import express from "express";
 import jwt from "jsonwebtoken";
-require("dotenv");
+import "dotenv/config";
 
 interface UserRequest extends express.Request {
     user?: string;

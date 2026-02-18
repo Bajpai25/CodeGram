@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
-import UserModel from "../models/user";
+import UserModel from "../models/user.js";
 import { Document } from "mongoose";
-import { DProblem } from "../models/problem";
+import { DProblem } from "../models/problem.js";
 
 export type Sort = "" | "asc" | "desc";
 
@@ -23,7 +23,7 @@ export function sortByDifficulty(
         })[]
 ) {
     if (order === "") return arr;
-    const difficultyRule = { easy: 1, medium: 2, hard: 3 };
+    const difficultyRule: Record<string, number> = { easy: 1, medium: 2, hard: 3 };
     if (order === "asc") {
         return arr.sort(
             (a, b) =>

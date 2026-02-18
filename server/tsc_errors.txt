@@ -1,0 +1,24 @@
+﻿routes/accounts.ts(6,23): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean '../models/user.js'?
+routes/accounts.ts(7,35): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean '../middlewares/token.js'?
+routes/accounts.ts(8,45): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean '../utils/utils.js'?
+routes/index.ts(2,21): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean './problem.js'?
+routes/index.ts(3,22): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean './accounts.js'?
+routes/index.ts(4,43): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean './onboard.js'?
+routes/index.ts(5,109): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean './roadmap.js'?
+routes/index.ts(6,54): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean './peer.js'?
+routes/onboard.ts(2,21): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean '../models/onboard.js'?
+routes/peer.ts(3,18): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean '../models/peers.js'?
+routes/problem.ts(2,31): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean '../utils/createTest.js'?
+routes/problem.ts(3,40): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean '../models/problem.js'?
+routes/problem.ts(4,23): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean '../models/user.js'?
+routes/problem.ts(10,8): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean '../utils/utils.js'?
+routes/roadmap.ts(4,21): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean '../models/roadmap.js'?
+server.ts(4,20): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean './routes/index.js'?
+server.ts(5,28): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean './middlewares/cors.js'?
+utils/createTest.ts(1,8): error TS1192: Module '"D:/codegram/CodeGram/server/node_modules/acorn/dist/acorn"' has no default export.
+utils/utils.ts(2,23): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean '../models/user.js'?
+utils/utils.ts(4,26): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean '../models/problem.js'?
+utils/utils.ts(30,17): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ easy: number; medium: number; hard: number; }'.
+utils/utils.ts(31,17): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ easy: number; medium: number; hard: number; }'.
+utils/utils.ts(36,17): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ easy: number; medium: number; hard: number; }'.
+utils/utils.ts(37,17): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ easy: number; medium: number; hard: number; }'.

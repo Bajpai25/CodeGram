@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
 import { Code, Calendar, Clock, ChevronRight, CheckCircle2, Lightbulb, Rocket, Sparkles, GraduationCap } from 'lucide-react';
 import axios from 'axios';
+import { API_URL } from '../App';
 
 
 interface Month {
@@ -90,7 +91,7 @@ const RoadmapId = () => {
   const [roadmapData, setRoadmapData] = useState(roadmapFromState? roadmapFromState : defaultRoadmap);
 const {id}=useParams()
  async function get_roadmap_by_id(){
-  const response=await axios(`https://codegram-backend.onrender.com/api/roadmap/${id}`)
+  const response=await axios(`${API_URL}/api/roadmap/${id}`)
   if(response.status===200){
     console.log(response.data)
     setRoadmapData(response.data)

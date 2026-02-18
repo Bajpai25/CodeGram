@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import MainHeading from "../components/MainHeading";
 import axios from "axios";
+import { API_URL } from "../App";
 import { Sparkles, User, Briefcase, GraduationCap, Award, LinkIcon, Loader } from 'lucide-react';
 
 interface Peer {
@@ -36,7 +37,7 @@ const ExplorePage = ({
   async function fetchPeerData() {
     setLoading(true);
     try {
-      const res = await axios("https://codegram-backend.onrender.com/api/peers");
+      const res = await axios(`${API_URL}/api/peers`);
       if (res.status === 200) {
         setPeers(res.data);
       }

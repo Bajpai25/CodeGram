@@ -1,6 +1,6 @@
 // peer.controller.ts
 import { Request, Response } from 'express';
-import Peer from "../models/peers";
+import Peer from "../models/peers.js";
 
 // Create Peer
 export const createPeer = async (req: Request, res: Response) => {

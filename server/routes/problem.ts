@@ -1,13 +1,13 @@
 import express from "express";
-import { writeTestFile } from "../utils/createTest";
-import ProblemModel, { DProblem } from "../models/problem";
-import UserModel from "../models/user";
+import { writeTestFile } from "../utils/createTest.js";
+import ProblemModel, { DProblem } from "../models/problem.js";
+import UserModel from "../models/user.js";
 import {
     sortByAcceptance,
     sortByDifficulty,
     sortByTitle,
     Sort
-} from "../utils/utils"
+} from "../utils/utils.js"
 
 import { Types } from "mongoose";
 

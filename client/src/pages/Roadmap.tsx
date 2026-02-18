@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
 import { Code, Calendar, Clock, ChevronRight, CheckCircle2, Lightbulb, Rocket, Sparkles,Users, GraduationCap } from 'lucide-react';
 import axios from 'axios';
+import { API_URL } from '../App';
 
 
 interface Month {
@@ -47,7 +48,7 @@ const Roadmap = () => {
   async function fetchPeerData() {
     setIsLoading(true);
     try {
-      const res = await axios("https://codegram-backend.onrender.com/api/peers");
+      const res = await axios(`${API_URL}/api/peers`);
       if (res.status === 200) {
         setPeers(res.data);
       }
@@ -128,7 +129,7 @@ const Roadmap = () => {
   const [roadmapData, setRoadmapData] = useState(roadmapFromState? roadmapFromState : defaultRoadmap);
 const roadmapId=localStorage.getItem("roadmapId")
  async function get_roadmap_by_id(){
-  const response=await axios(`https://codegram-backend.onrender.com/api/roadmap/${roadmapId}`)
+  const response=await axios(`${API_URL}/api/roadmap/${roadmapId}`)
   if(response.status===200){
     console.log(response.data)
     setRoadmapData(response.data)

@@ -8,6 +8,7 @@ import type { SelectChangeEvent } from "@mui/material"
 import { CheckCircle, ArrowRight } from "lucide-react"
 import { TypeAnimation } from "react-type-animation"
 import axios from "axios"
+import { API_URL } from "../App"
 import {Link, useNavigate} from "react-router-dom"
 
 const steps = [
@@ -113,25 +114,29 @@ const OnboardingFlow = () => {
       const onboardData = { ...formData, userId };
   
       // First API call
-      const onboardResponse = await axios.post('https://codegram-backend.onrender.com/api/onboard', onboardData);
+      const onboardResponse = await axios.post(`${API_URL}/api/onboard`, onboardData);
       if (onboardResponse.status === 201) {
         setCompleted(true);
       }
   
       // Second API call - Generate Roadmap
       setLoadingRoadmap(true); // Show loading screen
-      const roadmapResponse = await axios.post('https://codegram-backend.onrender.com/api/generate_roadmap', formData);
-      if (roadmapResponse.status === 200) {
-        console.log(roadmapResponse);
+      const roadmapResponse = await axios.post(`${API_URL}/api/generate_roadmap`, formData);
+      console.log("Roadmap response:", roadmapResponse.data);
+
+      // The backend now returns a parsed JSON object, so access it directly
+      const parsedData = roadmapResponse.data.roadmap;
+      console.log("Parsed roadmap data:", parsedData);
+
+      if (!parsedData || !parsedData.roadmap) {
+        throw new Error("Invalid roadmap data received from server");
       }
-      const parsedData = parseRoadmap(roadmapResponse.data.roadmap);
-      console.log(parsedData);
   
       // Third API call - Create Roadmap
-      const data={...parsedData.roadmap , userId}
-      const roadmapCreated = await axios.post('https://codegram-backend.onrender.com/api/roadmap', data);
+      const data = { ...parsedData.roadmap, userId };
+      const roadmapCreated = await axios.post(`${API_URL}/api/roadmap`, data);
       if (roadmapCreated.status === 200) {
-        console.log(roadmapCreated);
+        console.log("Roadmap saved:", roadmapCreated.data);
       }
       localStorage.setItem("roadmapId", roadmapCreated.data.roadmap._id);
        setLoadingRoadmap(false);

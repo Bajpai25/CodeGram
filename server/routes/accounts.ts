@@ -3,9 +3,9 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import Filter from "bad-words";
 import dotenv from "dotenv";
-import UserModel from "../models/user";
-import { authenticateToken } from "../middlewares/token";
-import { existsEmail, existsUsername } from "../utils/utils";
+import UserModel from "../models/user.js";
+import { authenticateToken } from "../middlewares/token.js";
+import { existsEmail, existsUsername } from "../utils/utils.js";
 import { z } from "zod"; // Using zod for validation
 import mongoose from "mongoose";
 
